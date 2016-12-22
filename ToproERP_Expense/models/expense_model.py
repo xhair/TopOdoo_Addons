@@ -15,10 +15,10 @@ class ExpenseAccountDetails(models.Model):
     details_expenses = fields.Float(string=u'费用金额', required=True)
     details_remark = fields.Char(string=u'备注', required=True, default=u'please enter remarks about your things ')
 
-    @api.constrains('expense_account_details_expenses')
-    def _check_expenses(self):
-        if self.expense_account_details_expenses <= 0:
-            raise exceptions.ValidationError(u"费用金额必须大于0!")
+    # @api.constrains('expense_account_details_expenses')
+    # def _check_expenses(self):
+    #     if self.expense_account_details_expenses <= 0:
+    #         raise exceptions.ValidationError(u"费用金额必须大于0!")
 
 
 # 银行账户
@@ -97,7 +97,7 @@ class ExpenseAccount(models.Model):
                               ('approval_pass', u'审批通过'), ('approval_reject', u'审批驳回'),
                               ('advanced', u'已完成')], default='draft',
                              string=u"当前状态", readonly=True)
-    issue_gld_id = fields.Many2one('syt.oa.gld', string=u'工联单', readonly=True, store=True, index=True)
+    issue_gld_id = fields.Many2one('syt.oa.gld', string=u'工联单', readonly=True)
     boolean_user = fields.Boolean(string=u'判断是否为当前用户', compute='_get_boolean_user')
 
     @api.depends('details_ids')
