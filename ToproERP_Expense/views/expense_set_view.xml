@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="expense_view_set_form">
+            <field name="name">expense_view_set_form</field>
+            <field name='model'>set.expense.account</field>
+            <field name="arch" type="xml">
+                <form string="设置报销类型">
+                    <group>
+                        <field name="type_name"/>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="expense_view_set_tree">
+            <field name="name">expense_view_set_tree</field>
+            <field name="model">set.expense.account</field>
+            <field name="arch" type="xml">
+                <tree string="设置报销类型">
+                    <field name="type_name"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="expense_view_set_search">
+            <field name="name">expense_view_set_search</field>
+            <field name="model">set.expense.account</field>
+            <field name="arch" type="xml">
+                <search string="费用报销申请单">
+                    <field name="type_name"/>
+                    <field name="name"/>
+                    <group string="Group by">
+                        <filter name="name" string="类型编号"
+                                context="{'group_by' : 'name'}"/>
+                        <filter name="type_name" string="类型名称"
+                                context="{'group_by' : 'type_name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="expense_view_set_action">
+            <field name="name">费用类型设置</field>
+            <field name="res_model">set.expense.account</field>
+            <field name="view_model">tree,form</field>
+        </record>
+
+        <record id="seq_set_expense" model="ir.sequence">
+            <field name="name">seq_set_expense</field>
+            <field name="company_id"/>
+            <field name="code">set.expense.account</field>
+            <field name="prefix"/>
+            <field name="padding">1</field>
+        </record>
+
+        <menuitem id="expense_set_menu_sub" name="设置" parent="expense_menu_top"/>
+        <menuitem id="expense_set_menu_request" name="费用类型设置"
+                  parent="expense_set_menu_sub"
+                  action="expense_view_set_action" groups="ToproERP_Expense.group_finance,ToproERP_Expense.group_manager"/>
+    </data>
+</odoo>

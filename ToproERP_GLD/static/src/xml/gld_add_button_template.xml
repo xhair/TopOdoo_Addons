@@ -1,0 +1,16 @@
+<templates>
+	<t t-extend="FormView.buttons">
+		<t t-jquery="button.oe_form_button_save" t-operation="after">
+			<!-- <a href="#" class="oe_button oe_list_button_import_lead oe_highlight">保存并提交</a> -->
+			<!-- <span class="oe_fade">or</span> -->
+
+			<!--<button type="button" class="oe_button oe_form_button_save_sent_gld" accesskey="F">保存并提交审批</button>-->
+		</t>
+		<!-- <t t-jquery="span.oe_form_buttons_edit">
+		this.attr('t-if', 'widget.options.save_and_sent');
+		</t>
+		<t t-jquery="span.oe_form_buttons_edit" t-operation="append">
+		<a href="#" class="oe_bold oe_list_button_import">123</a>
+		</t> -->
+	</t>
+</templates>
