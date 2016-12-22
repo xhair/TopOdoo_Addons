@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+syt_oa_gld_user,syt.oa.gld,model_syt_oa_gld,base.group_user,1,1,1,1
+syt_oa_gld_opinion_user,syt.oa.gld.opinion,model_syt_oa_gld_opinion,base.group_user,1,1,1,1
+syt.oa_gld_template_user,syt.oa.gld.template,model_syt_oa_gld_template,base.group_user,1,0,0,0
+syt_oa_gld_template_type_user,syt.oa.gld.template.type,model_syt_oa_gld_template_type,base.group_user,1,0,0,0
+syt_oa_gld_hr_employee_user,syt.oa.gld.hr.employee.user,hr.model_hr_employee,base.group_user,1,1,1,1
+syt_oa_gld_add_approver_wizard,syt_oa_gld_add_approver_wizard,model_syt_oa_gld_add_approver_wizard,base.group_user,1,1,1,0
+syt_oa_gld_add_peoper_wizard,syt_oa_gld_add_peoper_wizard,model_syt_oa_gld_add_peoper_wizard,base.group_user,1,1,1,0
+syt_oa_gld_attachment_id,syt_oa_gld_attachment_id,base.model_ir_attachment,base.group_user,1,1,1,1
+syt_oa_gld_res_users,syt_oa_gld_res_users,base.model_res_users,base.group_user,1,1,0,0
+
+
+
+syt_oa_gld_hr_job,syt_oa_gld_hr_job,hr.model_hr_job,base.group_user,1,0,0,0
