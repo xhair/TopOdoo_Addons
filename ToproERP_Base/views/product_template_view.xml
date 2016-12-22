@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © <2016> <ToproERP liujing>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+    <data>
+
+        <record id="product_template_only_form_view" model="ir.ui.view">
+            <field name="name">product_template_only_form_view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <div name="options" position="inside">
+                    <div>
+                        <field name="is_part"/>
+                        <label for="is_part"/>
+                    </div>
+                </div>
+                <field name="default_code" position="after">
+                    <field name="factory_code"/>
+                    <field name="brands_id"/>
+                </field>
+
+                <notebook position="inside">
+                    <page string="适用性">
+                        <div name="apply_brands">
+                            <group>
+                                <field name="apply_to_brand_ids" widget="many2many_tags"/>
+                            </group>
+                        </div>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="product_product_form" model="ir.ui.view">
+            <field name="name">product_product_form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <div name="options" position="inside">
+                    <div>
+                        <field name="is_part"/>
+                        <label for="is_part"/>
+                    </div>
+                </div>
+                <notebook position="inside">
+                    <page string="可替换配件" attrs="{'invisible': [('is_part','=',False)]}">
+                        <group>
+                            <field name="replace_part_ids" widget="many2many_tags"/>
+                        </group>
+
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="product_template_view_tree" model="ir.ui.view">
+            <field name="name">product_template_view_tree</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="factory_code"/>
+                </field>
+                <!--<field name="state" position="replace">-->
+                    <!--<field name="remark"/>-->
+                <!--</field>-->
+            </field>
+        </record>
+
+        <record id="product_template_view_search" model="ir.ui.view">
+            <field name="name">product_template_view_search</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="replace">
+                    <field name="name" string="产品"
+                           filter_domain="['|','|',('default_code','ilike',self),('factory_code','ilike',self),('name','ilike',self)]"/>
+                    <separator/>
+                    <field name="brands_id" string="品牌" filter_domain="[('brands_id','like',self)]"/>
+                </field>
+
+                <field name="name" string="名称" filter_domain="[('name','like',self)]"/>
+
+            </field>
+        </record>
+
+
+        <record id="product_normal_form_view" model="ir.ui.view">
+            <field name="name">product_product_view_form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+
+                <field name="default_code" position="after">
+                    <field name="factory_code"/>
+                    <field name="brands_id"/>
+                </field>
+
+                <notebook position="inside">
+                    <page string="适用性">
+                        <div name="apply_brands">
+                            <group>
+                                <field name="apply_to_brand_ids" widget="many2many_tags"/>
+                                <field name="remark"/>
+                            </group>
+                        </div>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+
+        <record id="product_product_tree_view" model="ir.ui.view">
+            <field name="name">product_product_tree_view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+
+                <field name="barcode" position="before">
+                    <field name="remark"/>
+                </field>
+
+            </field>
+        </record>
+
+
+        <!--<record id="product_product_activity_action" model="ir.actions.act_window">-->
+        <!--<field name="name">产品</field>-->
+        <!--<field name="res_model">product.product</field>-->
+        <!--<field name="view_type">form</field>-->
+        <!--<field name="view_mode">tree,form</field>-->
+        <!--<field name="search_view_id" ref="product_template_view_search"/>-->
+        <!--</record>-->
+
+        <!--<menuitem id="menu_product_template" name="产品" parent="menu_toproerp_base_submenu"-->
+        <!--action="product_product_activity_action"/>-->
+        <!--<menuitem id="menu_product_action_form" action="product_product_activity_action"-->
+        <!--parent="menu_toproerp_base_product" sequence="99"/>-->
+
+        <delete model="ir.ui.menu" search="[('id','=',ref('product.menu_product_template'))]"/>
+
+        <record id="action_car_product_part" model="ir.actions.act_window">
+            <field name="name">配件</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="domain">[('is_part', '=',True)]</field>
+            <!--<field name="search_view_id" ref="product_product_search_view"/>-->
+        </record>
+
+        <record id="action_car_product_service" model="ir.actions.act_window">
+            <field name="name">服务</field>
+            <field name="res_model">product.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="domain">[('type', '=','service')]</field>
+            <!--<field name="search_view_id" ref="product_product_search_view"/>-->
+        </record>
+        <menuitem id="menu_toproerp_product_part" name="配件" parent="ToproERP_Base.menu_toproerp_base_product"
+                  action="action_car_product_part"/>
+        <menuitem id="menu_toproerp_product_service" name="服务" parent="ToproERP_Base.menu_toproerp_base_product"
+                  action="action_car_product_service"/>
+
+        <menuitem action="product.product_category_action_form"
+                  groups="base.group_no_one,ToproERP_Base.ToproERP_Base"
+                  id="menu_product_category_action_form"
+                  parent="menu_toproerp_base_product" sequence="2" string="产品分类"/>
+
+
+    </data>
+</openerp>
+

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © <2016> <ToproERP liujing>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+    <data>
+
+        <menuitem id="menu_toproerp_base" name="基础数据" groups="ToproERP_Base.ToproERP_Base"
+                  web_icon="ToproERP_Base,static/src/img/baseinfo.png"/>
+        <menuitem id="menu_toproerp_base_submenu" name="基础数据" parent="menu_toproerp_base"/>
+        <menuitem id="menu_toproerp_base_product" name="产品相关" parent="menu_toproerp_base"/>
+        <menuitem id="menu_toproerp_base_set" name="设置" parent="menu_toproerp_base"/>
+
+        <menuitem id="menu_toproerp_customer_service_father" name="客户服务"
+                  groups="ToproERP_Base.ToproERP_Base,group_toproerp_service_order_service_manager,security_Customer_Service_Specialist,appointment_commissioner,group_cashier_base"
+                  web_icon="ToproERP_Base,static/src/img/customeservice.png"/>
+        <menuitem id="menu_toproerp_customer" name="客户" parent="menu_toproerp_customer_service_father"/>
+        <menuitem id="menu_toproerp_customer_service_setup" name="设置" parent="menu_toproerp_customer_service_father"
+                  sequence="100"/>
+
+
+        <menuitem id="menu_toproerp_service_father" name="服务" web_icon="ToproERP_Base,static/src/img/service.png"/>
+        <menuitem id="menu_toproerp_service_setup" name="设置" parent="menu_toproerp_service_father"
+                  groups="ToproERP_Base.ToproERP_Base,ToproERP_Base.group_toproerp_service_order_reception_specialist,ToproERP_Base.group_toproerp_service_order_reception_supervisor,ToproERP_Base.group_toproerp_manufacturers_claim_officer,ToproERP_Base.group_toproerp_service_order_accident_supervisor,ToproERP_Base.group_toproerp_service_order_service_manager"
+                  sequence="100"/>
+        <!--groups="ToproERP_Base.ToproERP_Base" -->
+
+
+        <!--<menuitem name="Sales" id="base.menu_base_partner" groups="base.group_sale_salesman" sequence="6"-->
+        <!--web_icon="ToproERP_Base,static/src/img/sale.png"/>-->
+
+        <menuitem id="menu_toproerp_sale_father" name="销售"/>
+        <!--<menuitem id="menu_toproerp_sale" name="销售" parent="base.menu_base_partner"/>-->
+        <!--<menuitem id="menu_toproerp_sale_setup" name="设置" parent="base.menu_base_partner"/>-->
+
+        <menuitem id="menu_wechat_manage" name="微信" groups="ToproERP_Base.ToproERP_Base"
+                  web_icon="ToproERP_Base,static/src/img/wechat.png"/>
+        <menuitem id="menu_wechat_all_setup" name="设置" parent="menu_wechat_manage" sequence="90"/>
+
+
+        <menuitem id="menu_toproerp_cashier" name="财务" web_icon="ToproERP_Cashier,static/src/img/icon.png"/>
+
+    </data>
+</openerp>

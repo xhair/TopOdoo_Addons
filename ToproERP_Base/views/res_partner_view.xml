@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © <2016> <ToproERP liujing>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+    <data>
+
+        <record id="res_partner_view_form" model="ir.ui.view">
+            <field name="name">res_partner_view_form</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+
+                <field name="website" position="after">
+                    <field name="card_type" domain="[('is_company', '=', True)]"
+                           attrs="{'invisible': [('is_company','=', True),('parent_id', '=', False)]}"/>
+                    <field name="card" domain="[('card_type', '=', 'card')]"
+                           attrs="{'invisible': ['|',('is_company','=', True),('card_type','=','passport')]}"/>
+                    <field name="passport" domain="[('card_type', '=', passport)]"
+                           attrs="{'invisible': ['|',('is_company','=', True),('card_type','=','card')]}"/>
+                    <field name="business_license"
+                           attrs="{'invisible': [('is_company','=', False)]}"/>
+                    <field name="birthday" domain="[('card_type', '=', passport)]"
+                           attrs="{'invisible': ['|',('is_company','=', True),('card_type','=','passport')]}"
+                           readonly="1"/>
+                    <field name="age" domain="[('card_type', '=', passport)]"
+                           attrs="{'invisible': ['|',('is_company','=', True),('card_type','=','passport')]}"
+                           readonly="1"/>
+                    <field name="sex" domain="[('card_type', '=', passport)]"
+                           attrs="{'invisible': ['|',('is_company','=', True),('card_type','=','passport')]}"
+                           readonly="1"/>
+
+                    <field name="if_group_cusotmer_contact_views" invisible="1"></field>
+                </field>
+                <!--<group>-->
+                <!--<group>-->
+                <xpath expr="//field[@name='phone']" position="replace">
+                    <field name="phone" attrs="{'invisible':[('if_group_cusotmer_contact_views','=',False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='mobile']" position="replace">
+                    <field name="mobile" attrs="{'invisible':[('if_group_cusotmer_contact_views','=',False)]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='email']" position="replace">
+                    <field name="email" widget="email"
+                           attrs="{'required': [('user_ids','!=', [])],'invisible':[('if_group_cusotmer_contact_views','=',False)]}"/>
+                </xpath>
+                <!--</group>-->
+                <!--</group>-->
+                <group name="purchase" position="after">
+                    <group string="保险" attrs="{'invisible': [('company_type','!=', 'company')]}">
+                        <field name="isinscomp" domain="[('company_type', '=', 'company')]"/>
+                    </group>
+                </group>
+            </field>
+        </record>
+
+        <record id="base.view_partner_tree" model="ir.ui.view">
+            <field name="name">view_partner_tree</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="客户">
+                    <field name="display_name"/>
+                    <!--<field name="card_type"/>-->
+                    <!--<field name="card"/>-->
+                    <!--<field name="passport"/>-->
+                    <field name="birthday"/>
+                    <field name="age"/>
+                    <field name="sex"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="res_partner_activity_action" model="ir.actions.act_window">
+            <field name="name">客户</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="search_view_id" ref="product_template_view_search"/>-->
+        </record>
+
+        <menuitem id="menu_res_partner" name="客户" parent="menu_toproerp_customer"
+                  action="res_partner_activity_action"/>
+
+    </data>
+</openerp>

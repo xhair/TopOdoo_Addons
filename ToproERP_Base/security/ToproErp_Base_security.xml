@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © <YEAR(S)> <AUTHOR(S)>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+
+    <!-- 权限组分类 -->
+    <data noupdate="0">
+
+        <record id="erp_base_category" model="ir.module.category">
+            <field name="name">基础数据管理</field>
+            <field name="description"></field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="customer_service_category" model="ir.module.category">
+            <field name="name">客户服务管理</field>
+            <field name="description"></field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="service_category" model="ir.module.category">
+            <field name="name">服务管理</field>
+            <field name="description"></field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="warehouse_category" model="ir.module.category">
+            <field name="name">仓库管理</field>
+            <field name="description"></field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="vehicle_sales_category" model="ir.module.category">
+            <field name="name">整车销售管理</field>
+            <field name="description"></field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="vehicle_finance_specialist" model="ir.module.category">
+            <field name="name">金融管理</field>
+            <field name="description"></field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="finance_category" model="ir.module.category">
+            <field name="name">财务管理</field>
+            <field name="description"></field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="brand_category" model="ir.module.category">
+            <field name="name">品牌管理</field>
+            <field name="description"></field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="clique_category" model="ir.module.category">
+            <field name="name">集团管理</field>
+            <field name="description"></field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="purchase_category" model="ir.module.category">
+            <field name="name">采购管理</field>
+            <field name="description"></field>
+            <field name="sequence">1</field>
+        </record>
+
+
+        <record id="toproerp_insurance_category" model="ir.module.category">
+            <field name="name">保险</field>
+            <field name="description"></field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="appointment_commissioner" model="res.groups">
+            <field name="name">预约专员</field>
+            <field name="category_id" ref="ToproERP_Base.customer_service_category"/>
+            <field name="comment">客户服务</field>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+        <record id="security_Customer_Service_Specialist" model="res.groups">
+            <field name="name">客服专员</field>
+            <field name="category_id" ref="ToproERP_Base.customer_service_category"/>
+            <field name="comment">客户服务</field>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+        <record id="after_sales_service_consultant" model="res.groups">
+            <field name="name">客服经理</field>
+            <field name="category_id" ref="ToproERP_Base.customer_service_category"/>
+            <field name="comment">客户服务</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('ToproERP_Base.appointment_commissioner')),(4, ref('ToproERP_Base.security_Customer_Service_Specialist'))]"/>
+        </record>
+
+        <record id="group_accounting_base" model="res.groups">
+            <field name="name">会计</field>
+            <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_cashier_base" model="res.groups">
+            <field name="name">收银员</field>
+            <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!--<record id="group_invoice_apply" model="res.groups">-->
+        <!--<field name="name">发票申请</field>-->
+        <!--<field name="category_id" ref="base.module_category_accounting_and_finance"/>-->
+        <!--<field name="implied_ids" />-->
+        <!--</record>-->
+
+        <record id="group_toproerp_after_sales_information" model="res.groups">
+            <field name="name">售后信息员</field>
+            <field name="comment">售后信息员</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.appointment_commissioner')),
+            (4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_toproerp_pdi_qc" model="res.groups">
+            <field name="name">pdi质检员</field>
+            <field name="comment">pdi质检员</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.appointment_commissioner')),
+            (4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_toproerp_service_order_reception_specialist" model="res.groups">
+            <field name="name">接待专员</field>
+            <field name="comment">接待专员</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.appointment_commissioner')),
+            (4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_toproerp_service_order_dispatcher" model="res.groups">
+            <field name="name">调度员</field>
+            <field name="comment">调度员</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_toproerp_service_order_qc" model="res.groups">
+            <field name="name">质检员</field>
+            <field name="comment">质检员</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- 接待主管 -->
+        <record id="group_toproerp_service_order_reception_supervisor" model="res.groups">
+            <field name="name">接待主管</field>
+            <field name="comment">接待主管</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids"
+                   eval="[(4, ref('ToproERP_Base.group_toproerp_service_order_reception_specialist')),(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- 索赔员 -->
+        <record id="group_toproerp_manufacturers_claim_officer" model="res.groups">
+            <field name="name">索赔员</field>
+            <field name="comment">索赔员</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids"
+                   eval="[(4, ref('ToproERP_Base.group_toproerp_service_order_reception_specialist')),(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- 事故主管 -->
+        <record id="group_toproerp_service_order_accident_supervisor" model="res.groups">
+            <field name="name">事故主管</field>
+            <field name="comment">事故主管</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids"
+                   eval="[(4, ref('ToproERP_Base.group_toproerp_service_order_reception_specialist')),(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- 服务经理 -->
+        <record id="group_toproerp_service_order_service_manager" model="res.groups">
+            <field name="name">服务经理</field>
+            <field name="comment">服务经理</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_toproerp_service_order_reception_supervisor')),
+        (4, ref('ToproERP_Base.group_toproerp_service_order_dispatcher')),
+        (4, ref('ToproERP_Base.group_toproerp_service_order_qc')),
+        (4, ref('ToproERP_Base.group_toproerp_manufacturers_claim_officer'))]"/>
+        </record>
+
+        <!--理赔主管-->
+        <record id="group_toproerp_service_order_claim_supervisor" model="res.groups">
+            <field name="name">理赔主管</field>
+            <field name="comment">理赔主管</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids"
+                   eval=""/>
+        </record>
+
+        <!--保险商机服务顾问-->
+        <record id="group_toproerp_business_opportunity_service_advisor" model="res.groups">
+            <field name="name">保险商机服务顾问</field>
+            <field name="comment">保险商机服务顾问</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids" eval=""/>
+        </record>
+
+        <!--保险商机经理-->
+        <record id="group_toproerp_business_opportunity_manager" model="res.groups">
+            <field name="name">保险商机经理</field>
+            <field name="comment">保险商机经理</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids" eval=""/>
+        </record>
+
+        <!-- 车间主管 -->
+        <record id="group_toproerp_service_order_workshop_manager" model="res.groups">
+            <field name="name">车间主管</field>
+            <field name="comment">车间主管</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+            <field name="implied_ids"
+                   eval="[(4, ref('ToproERP_Base.group_toproerp_service_order_dispatcher')),(4, ref('ToproERP_Base.group_toproerp_service_order_qc'))]"/>
+        </record>
+
+        <record id="group_casher_and_treasury" model="res.groups">
+            <field name="name">财务出纳</field>
+            <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_cashier_base'))]"/>
+        </record>
+
+        <record id="group_casher_and_accountant" model="res.groups">
+            <field name="name">财务会计</field>
+            <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+            <field name="implied_ids" eval=""/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_casher_and_treasury'))]"/>
+        </record>
+
+        <record id="group_account_manager" model="res.groups">
+            <field name="name">财务经理</field>
+            <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_casher_and_accountant'))]"/>
+        </record>
+
+        <record id="group_account_director" model="res.groups">
+            <field name="name">财务总监</field>
+            <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_account_manager'))]"/>
+        </record>
+
+
+        <!--<record id="group_toproerp_other_car_resource" model="res.groups">-->
+        <!--<field name="name">查看其它公司车辆</field>-->
+        <!--<field name="category_id" ref="vehicle_sales_category"/>-->
+        <!--<field name="implied_ids" eval=""/>-->
+        <!--</record>-->
+
+        <record id="group_toproerp_car_resource_sales_consultant" model="res.groups">
+            <field name="name">销售顾问</field>
+            <field name="category_id" ref="vehicle_sales_category"/>
+            <field name="implied_ids" eval=""/>
+        </record>
+
+        <record id="group_toproerp_car_resource" model="res.groups">
+            <field name="name">整车信息员</field>
+            <field name="category_id" ref="vehicle_sales_category"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_toproerp_car_resource_sales_consultant'))]"/>
+            <field name="implied_ids" eval=""/>
+        </record>
+
+        <record id="group_toproerp_sale_policies_make" model="res.groups">
+            <field name="name">销售政策制定</field>
+            <field name="category_id" ref="vehicle_sales_category"/>
+            <field name="implied_ids" eval=""/>
+        </record>
+
+        <record id="group_toproerp_car_resource_sales_manager" model="res.groups">
+            <field name="name">销售经理</field>
+            <field name="category_id" ref="vehicle_sales_category"/>
+            <field name="implied_ids"
+                   eval="[(4, ref('ToproERP_Base.group_toproerp_car_resource')),(4, ref('ToproERP_Base.group_toproerp_car_resource_sales_consultant'))]"/>
+        </record>
+
+        <record id="group_toproerp_car_resource_storekeeper" model="res.groups">
+            <field name="name">整车库管</field>
+            <field name="category_id" ref="vehicle_sales_category"/>
+            <field name="implied_ids" eval=""/>
+        </record>
+
+        <record id="group_toproerp_finance_specialist" model="res.groups">
+            <field name="name">金融专员</field>
+            <field name="category_id" ref="vehicle_finance_specialist"/>
+            <field name="implied_ids" eval=""/>
+        </record>
+
+        <record id="group_toproerp_finance_approver" model="res.groups">
+            <field name="name">金融审核员</field>
+            <field name="category_id" ref="vehicle_finance_specialist"/>
+            <field name="implied_ids" eval=""/>
+        </record>
+
+        <record id="group_toproerp_finance_manager" model="res.groups">
+            <field name="name">金融经理</field>
+            <field name="category_id" ref="vehicle_finance_specialist"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_toproerp_finance_approver'))]"/>
+        </record>
+
+
+        <record id="group_purchasing_manager" model="res.groups">
+            <field name="name">集团采购经理</field>
+            <field name="category_id" ref="vehicle_sales_category"/>
+            <field name="implied_ids" eval=""/>
+        </record>
+
+        <record id="group_brand_manager" model="res.groups">
+            <field name="name">品牌经理</field>
+            <field name="category_id" ref="brand_category"/>
+            <field name="implied_ids" eval=""/>
+        </record>
+
+        <record id="group_general_manager" model="res.groups">
+            <field name="name">总经理</field>
+            <field name="category_id" ref="vehicle_sales_category"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_toproerp_car_resource_sales_manager'))]"/>
+        </record>
+
+
+        <record id="group_toproerp_purchase" model="res.groups">
+            <field name="name">采购专员</field>
+            <field name="category_id" ref="ToproERP_Base.purchase_category"/>
+            <field name="implied_ids" eval=""/>
+        </record>
+
+        <record id="group_toproerp_purchase_manager" model="res.groups">
+            <field name="name">采购经理</field>
+            <field name="category_id" ref="ToproERP_Base.purchase_category"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_toproerp_purchase'))]"/>
+        </record>
+
+        <record id="group_toproerp_purchase_group_manager" model="res.groups">
+            <field name="name">集团采购经理</field>
+            <field name="category_id" ref="ToproERP_Base.purchase_category"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_toproerp_purchase_manager'))]"/>
+        </record>
+
+        <record id="group_toproerp_boutique_manager" model="res.groups">
+            <field name="name">精品业务管理员</field>
+            <field name="category_id" ref="ToproERP_Base.service_category"/>
+        </record>
+
+
+        <!--仓库的权限组-->
+        <record id="group_sale_man" model="res.groups">
+            <field name="name">业务员</field>
+            <field name="category_id" ref="warehouse_category"/>
+            <field name="implied_ids" eval=""/>
+        </record>
+
+        <record id="group_sale_manager" model="res.groups">
+            <field name="name">业务经理</field>
+            <field name="category_id" ref="warehouse_category"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_sale_man'))]"/>
+        </record>
+
+        <record id="group_stock_look" model="res.groups">
+            <field name="name">仓库查看</field>
+            <field name="category_id" ref="warehouse_category"/>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+        <record id="group_stock_operation" model="res.groups">
+            <field name="name">仓库管理</field>
+            <field name="category_id" ref="warehouse_category"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_stock_look'))]"/>
+        </record>
+
+        <record id="group_stock_manager" model="res.groups">
+            <field name="name">仓库经理</field>
+            <field name="category_id" ref="warehouse_category"/>
+            <field name="implied_ids" eval="[(4, ref('ToproERP_Base.group_stock_operation'))]"/>
+        </record>
+
+    </data>
+
+
+    <!-- 权限组 -->
+    <data>
+        <record id="ToproERP_Base.ToproERP_Base" model="res.groups">
+            <field name="name">基础数据管理员</field>
+            <field name="comment">基础数据管理员</field>
+            <field name="category_id" ref="ToproERP_Base.erp_base_category"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_cusotmer_contact_views" model="res.groups">
+            <field name="name">客户联络信息查看</field>
+            <field name="comment">拥有此权限组的用户才能查看客户的联络信息</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_cost_views" model="res.groups">
+            <field name="name">成本信息查看</field>
+            <field name="comment">拥有此权限组的用户才能查看配件和业务单据上的成本信息</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!--<record model="ir.rule" id="syt_leave_base_rule">
+            <field name="name">雇员访问请假</field>
+            <field name="model_id" ref="model_syt_leave"/>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+        </record>-->
+
+
+        <!--保险-->
+        <record id="toproerp_insurance_group_saler" model="res.groups">
+            <field name="name">保险专员</field>
+            <field name="comment">销售专员用户组</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+
+        <record id="toproerp_insurance_group_setting" model="res.groups">
+            <field name="name">保险设置人员</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="comment">保险模块基础数据参数管理</field>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+        <record id="toproerp_insurance_group_logistics" model="res.groups">
+            <field name="name">保险后勤</field>
+            <field name="comment">保险后勤用户组</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+        <record id="group_maintain" model="res.groups">
+            <field name="name">基础数据维护</field>
+            <field name="comment">公共资源基础数据维护组</field>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+        <record id="toproerp_insurance_part_time_job_sales" model="res.groups">
+            <field name="name">兼职保险专员</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="comment">兼职保险专员组</field>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+        <record id="toproerp_insurance_group_finance_cashier" model="res.groups">
+            <field name="name">财务出纳</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="comment">财务出纳组</field>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+        <record id="toproerp_insurance_group_company_insurance_header" model="res.groups">
+            <field name="name">分公司保险主管</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="comment">公司领导人员用户组</field>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+        <record id="toproerp_insurance_group_settle" model="res.groups">
+            <field name="name">保险结算人员</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="comment">保险模块结算单结算</field>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+        <record id="toproerp_insurance_group_couponer" model="res.groups">
+            <field name="name">优惠券管理员</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="comment">优惠券管理员</field>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+        <record id="toproerp_insurance_group_company_finance" model="res.groups">
+            <field name="name">分公司财务出纳</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="comment">4S店财务人员</field>
+            <field name="implied_ids" eval="[(4,ref('toproerp_insurance_group_company_insurance_header'))]"/>
+        </record>
+
+        <record id="toproerp_insurance_group_insurance_header" model="res.groups">
+            <field name="name">集团保险主管</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="comment">公司领导人员用户组</field>
+            <field name="implied_ids" eval="[(4, ref('toproerp_insurance_group_company_insurance_header'))]"/>
+        </record>
+
+        <record id="toproerp_insurance_group_leadership" model="res.groups">
+            <field name="name">单证管理员</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="comment">单证管理员</field>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+        <record id="toproerp_insurance_group_checker" model="res.groups">
+            <field name="name">核对人</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="comment">主要核对单据</field>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+
+        <record id="toproerp_insurance_group_logistics_saler" model="res.groups">
+            <field name="name">非集团员工保险专员</field>
+            <field name="category_id" ref="toproerp_insurance_category"/>
+            <field name="comment">非集团员工保险专员组</field>
+            <field name="implied_ids" eval="[]"/>
+        </record>
+    </data>
+
+
+    <data>
+        <record model="ir.rule" id="product_brands_rule">
+            <field name="name">product multi-brands</field>
+            <field name="model_id" ref="product.model_product_product"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                ['|',('apply_to_brand_ids','in',user.company_id.brands_ids.ids),('apply_to_brand_ids','=',False)]
+            </field>
+        </record>
+
+        <record model="ir.rule" id="product_template_brands_rule">
+            <field name="name">product template multi-brands</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                ['|',('apply_to_brand_ids','in',user.company_id.brands_ids.ids),('apply_to_brand_ids','=',False)]
+            </field>
+        </record>
+
+
+        <!--<record id="security_ClientManager_coupon_type" model="res.groups">-->
+        <!--<field name="name">客服经理</field>-->
+        <!--<field name="category_id" ref="ToproERP_Base.customer_service_category"/>-->
+        <!--<field name="implied_ids" eval="[(4, ref('ToproERP_Base.security_Customer_Service_Specialist'))]"/>-->
+        <!--</record>-->
+
+        <!--<record id="security_Aftersales_Consultant_manager" model="res.groups">-->
+        <!--<field name="name">售后服务经理</field>-->
+        <!--<field name="implied_ids" eval="[(4, ref('ToproERP_Base.security_Aftersales_Consultant'))]"/>-->
+        <!--</record>-->
+
+        <!--<record id="security_Aftersales_Consultant" model="res.groups">-->
+        <!--<field name="name">售后服务顾问</field>-->
+        <!--</record>-->
+
+        <!--&lt;!&ndash;职业&ndash;&gt;-->
+        <!--<record model="ir.rule" id="hr_job_comp_rule">-->
+        <!--<field name="name">hr_job rule</field>-->
+        <!--<field name="model_id" ref="hr.model_hr_job"/>-->
+        <!--<field name="inherit_id" ref="hr.hr_job_comp_rule"/>-->
+        <!--<field name="global" eval="False"/>-->
+        <!--<field name="domain_force">-->
+        <!--[]-->
+        <!--</field>-->
+        <!--<field name="active">False</field>-->
+        <!--</record>-->
+
+        <!--&lt;!&ndash;部门&ndash;&gt;-->
+        <!--<record model="ir.rule" id="hr_dept_comp_rule">-->
+        <!--<field name="name">hr_department rule</field>-->
+        <!--<field name="model_id" ref="hr.model_hr_department"/>-->
+        <!--<field name="inherit_id" ref="hr.hr_dept_comp_rule"/>-->
+        <!--<field name="global" eval="False"/>-->
+        <!--<field name="domain_force">-->
+        <!--[]-->
+        <!--</field>-->
+        <!--<field name="active">False</field>-->
+        <!--</record>-->
+
+        <!--&lt;!&ndash;公司&ndash;&gt;-->
+        <!--<record model="ir.rule" id="res_company_rule">-->
+        <!--<field name="name">company rule</field>-->
+        <!--<field name="model_id" ref="base.model_res_company"/>-->
+        <!--<field name="inherit_id" ref="base.res_company_rule"/>-->
+        <!--<field name="global" eval="False"/>-->
+        <!--<field name="domain_force">-->
+        <!--[]-->
+        <!--</field>-->
+        <!--<field name="active">False</field>-->
+        <!--</record>-->
+
+        <!--<delete model="hr.job" search="[('inherit_id','=',ref('hr.hr_job_comp_rule'))]"/>-->
+    </data>
+
+</openerp>

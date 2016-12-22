@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+
+        <record id="base_hr_job_view_form" model="ir.ui.view">
+            <field name="name">base_hr_job_view_form</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+            <field name="model">hr.job</field>
+            <field name="arch" type="xml">
+                <group position="replace">
+                    <group name="employee_data">
+                        <group>
+                            <field name="company_id" class="oe_inline" options="{'no_create': True}"/>
+                            <field name="no_of_recruitment" class="oe_inline"/>
+                        </group>
+                        <group>
+                            <field name="department_id" class="oe_inline" domain="[('company_id','=',company_id)]"/>
+                        </group>
+                    </group>
+                </group>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>
