@@ -1,0 +1,57 @@
+.info{
+    margin: 10px 3%;
+}
+.info h5{
+    font-weight: 600;
+    display: inline-block;
+}
+.info p{
+    font-size: 16px;
+    display: inline-block;
+}
+.cancel_reservation , .reservation_delay{
+    width: 45%;
+    display: inline-block;
+    background-color:#007bb6;
+    padding: 6px;
+    border: 0px;
+    font-size: 18px;
+    border-radius: 6px;
+    margin: 0px 2%;
+    color: #ffffff;
+}
+.buttons{
+    margin-top: 20px;
+}
+#cancel_prompt{
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    background-color: rgba(255, 255, 255,1);
+    color: #000000;
+    text-align: center;
+    border-radius: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: 50%;
+    font-size: 18px;
+}
+#cancel_prompt button{
+    margin: 0px;
+    background-color: #ffffff;
+    padding: 0px;
+    width: 48.5%;
+    border: 0px;
+    border-right: 1px solid lightslategray;
+}
+#cancel_prompt button:nth-child(3){
+    border: 0px;
+}
+#prompt_text{
+    border-bottom: 1px solid lightslategray;
+    padding:8px 0px;
+    font-size: 19px;
+}
+#prompt{
+    font-size: 18px;
+}

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_wechat_enterprise_app_menu_form">
+            <field name="name">wechat.enterprise.app.menu.form</field>
+            <field name="model">wechat.enterprise.app.menu</field>
+            <field name="arch" type="xml">
+                <form string="应用菜单">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="agentid"/>
+                                <field name="type"/>
+                            </group>
+                            <group>
+                                <field name="name"/>
+                                <field name="partner_menu_id"
+                                        attrs="{'invisible': [('type','in',('sub_button'))]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="key" attrs="{'invisible': [('type','in',('view','sub_button'))]}"/>
+                            <field name="url"
+                                   attrs="{'invisible': [('type','in',('sub_button','click','scancode_push','scancode_waitmsg','pic_sysphoto','pic_photo_or_album','video'))]}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree -->
+        <record id="view_wechat_enterprise_app_menu_tree" model="ir.ui.view">
+            <field name="name">wechat.enterprise.app.menu.tree</field>
+            <field name="model">wechat.enterprise.app.menu</field>
+            <field name="arch" type="xml">
+                <tree string="应用菜单">
+                    <field name="agentid"/>
+                    <field name="name"/>
+                    <field name="partner_menu_id"/>
+                    <field name="type"/>
+                    <field name="key"/>
+                    <field name="url"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- search -->
+        <record id="view_wechat_enterprise_app_menu_search" model="ir.ui.view">
+            <field name="name">wechat.enterprise.app.menu.search</field>
+            <field name="model">wechat.enterprise.app.menu</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="应用菜单">
+                    <field name="name" filter_domain="[('name','ilike',self)]" string="菜单名称"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="view_wechat_enterprise_app_menu_action" model="ir.actions.act_window">
+            <field name="name">应用菜单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wechat.enterprise.app.menu</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_wechat_enterprise_app_menu_tree"/>
+        </record>
+
+        <!-- menu -->
+        <menuitem action="view_wechat_enterprise_app_menu_action"
+                  id="menu_wechat_enterprise_app_menu_form" name="应用菜单"
+                  parent="menu_wechat_enterprise_setup" sequence="30"/>
+    </data>
+</openerp>
+

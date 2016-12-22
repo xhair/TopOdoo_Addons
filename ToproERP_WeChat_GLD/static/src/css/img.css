@@ -1,0 +1,33 @@
+
+.header_background{
+    background:url('../img/20140813082524596.png');
+    height:300px;
+}
+
+.header_background1{
+    background:url('../img/20140813082524596.png');
+    height:300px;
+    margin-left:400px;
+}
+
+.title{
+    color:#FFFFFF;
+}
+
+.item active{
+    '../img/1.jpg'
+}
+
+.jumbotron {
+    padding:20px;
+    border-style:dotted;
+    border: 10px;
+    border-color: #077ace;
+}
+
+.aligncenter {
+    clear: both;
+    display: block;
+    margin:auto;
+    width:300px;
+}

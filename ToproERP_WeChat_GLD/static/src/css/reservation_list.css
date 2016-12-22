@@ -1,0 +1,51 @@
+.reservation_detail {
+    padding: 6px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    margin: 10px 3%;
+    box-shadow: 2px 2px 2px #646d80;
+}
+
+.reservation_detail h3 {
+    text-align: center;
+    margin: 5px 0px;
+    padding-bottom: 5px;
+    /*background-color: #23afce;*/
+    padding: 5px;
+    width: 30%;
+    font-weight: 900;
+    color: #ffffff;
+    background-image:url("/ToproERP_Wechat/static/img/jiantou.png");
+    background-size:100% 100%;
+}
+
+.reservation_detail h4 {
+    text-align: right;
+    margin-top: -35px;
+    font-size: 20px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+}
+ .reservation_detail p{
+     margin-left: 5%;
+ }
+body {
+    background-color: #eaeaea;
+}
+
+#list_container {
+    margin-bottom: 50px;
+}
+.red{
+    color: #DF1612;
+}
+.blue{
+    color: #22B8D6;
+}
+.yellow{
+    color: #EBEB20;
+}
+.green{
+    color: #2AA728;
+}
+

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_wechat_enterprise_contact_employee_form">
+            <field name="name">wechat.enterprise.contact.employee.form</field>
+            <field name="model">wechat.enterprise.contact.employee</field>
+            <field name="arch" type="xml">
+                <form string="员工通讯录">
+                    <header>
+                        <button string="更新当前员工至微信" name="create_current_employee" type="object" class="oe_highlight"/>
+                        <button string="更新所有员工至微信" name="create_employee" type="object" class="oe_highlight"/>
+                        <button string="从微信获取所有员工" name="get_employee" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group string="基本信息">
+                            <group>
+                                <field name="name"/>
+                                <field name="userid"/>
+                                <field name="status"/>
+                            </group>
+                            <group>
+                                <field name="gender"/>
+                                <field name="position"/>
+                            </group>
+                        </group>
+                        <group string="所属部门">
+                            <field name="department"/>
+                        </group>
+                        <group string="识别信息">
+                            <group>
+                                <field name="mobile"/>
+                                <field name="email"/>
+                                <field name="extattr"/>
+                            </group>
+                            <group>
+                                <field name="weixinid"/>
+                                <field name="avatar_mediaid"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree -->
+        <record id="view_wechat_enterprise_contact_employee_tree" model="ir.ui.view">
+            <field name="name">wechat.enterprise.contact.employee.tree</field>
+            <field name="model">wechat.enterprise.contact.employee</field>
+            <field name="arch" type="xml">
+                <tree string="员工通讯录">
+                    <field name="name"/>
+                    <field name="userid"/>
+                    <field name="department"/>
+                    <field name="position"/>
+                    <field name="mobile"/>
+                    <field name="gender"/>
+                    <field name="email"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- search -->
+        <record id="view_wechat_enterprise_contact_employee_search" model="ir.ui.view">
+            <field name="name">wechat.enterprise.contact.employee.search</field>
+            <field name="model">wechat.enterprise.contact.employee</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="员工通讯录">
+                    <field name="name" filter_domain="[('name','ilike',self)]" string="员工名称"/>
+                    <field name="mobile" filter_domain="[('mobile','ilike',self)]" string="电话号码"/>
+                    <field name="department" filter_domain="[('department','ilike',self)]" string="部门名称"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="view_wechat_enterprise_contact_employee_action" model="ir.actions.act_window">
+            <field name="name">员工通讯录</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wechat.enterprise.contact.employee</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_wechat_enterprise_contact_employee_tree"/>
+        </record>
+
+        <!-- menu -->
+        <menuitem action="view_wechat_enterprise_contact_employee_action"
+                  id="menu_wechat_enterprise_contact_employee_form" name="员工通讯录"
+                  parent="menu_wechat_enterprise_contact" sequence="30"/>
+
+    </data>
+</openerp>
+

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_wechat_enterprise_receive_message_form">
+            <field name="name">wechat.enterprise.receive.message.form</field>
+            <field name="model">wechat.enterprise.receive.message</field>
+            <field name="arch" type="xml">
+                <form string="接收消息">
+                    <sheet>
+                        <group string="消息基本信息">
+                            <group>
+                                <field name="ToUserName"/>
+                                <field name="AgentID"/>
+                                <field name="MsgId"/>
+                            </group>
+                            <group>
+                                <field name="FromUserName"/>
+                                <field name="state"/>
+                                <field name="CreateTime"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="MsgType"/>
+                        </group>
+                        <group string="消息内容">
+                            <field name="MediaId" attrs="{'invisible': [('MsgType','in',('text','location','link'))]}"/>
+                            <field name="Format" attrs="{'invisible': [('MsgType','in',('text','image','video','shortvideo','location','link'))]}"/>
+                            <field name="ThumbMediaId" attrs="{'invisible': [('MsgType','in',('text','image','voice','location','link'))]}"/>
+                            <field name="PicUrl" attrs="{'invisible': [('MsgType','in',('text','voice','video','shortvideo','location','link'))]}"/>
+                            <field name="Content" attrs="{'invisible': [('MsgType','in',('image','voice','video','location','link','shortvideo'))]}"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="Location_X" attrs="{'invisible': [('MsgType','in',('text','image','voice','video','shortvideo','link'))]}"/>
+                                <field name="Scale" attrs="{'invisible': [('MsgType','in',('text','image','voice','video','shortvideo','link'))]}"/>
+                            </group>
+                            <group>
+                                <field name="Location_Y" attrs="{'invisible': [('MsgType','in',('text','image','voice','video','shortvideo','link'))]}"/>
+                                <field name="Label" attrs="{'invisible': [('MsgType','in',('text','image','voice','video','shortvideo','link'))]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="Title" attrs="{'invisible': [('MsgType','in',('text','image','voice','video','shortvideo','location'))]}"/>
+                                <field name="Description" attrs="{'invisible': [('MsgType','in',('text','image','voice','video','shortvideo','location'))]}"/>
+                            </group>
+                            <group>
+                                <field name="Cover_PicUrl" attrs="{'invisible': [('MsgType','in',('text','image','voice','video','shortvideo','location'))]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree -->
+        <record id="view_wechat_enterprise_receive_message_tree" model="ir.ui.view">
+            <field name="name">wechat.enterprise.receive.message.tree</field>
+            <field name="model">wechat.enterprise.receive.message</field>
+            <field name="arch" type="xml">
+                <tree string="接收消息">
+                    <field name="ToUserName"/>
+                    <field name="CreateTime"/>
+                    <field name="FromUserName"/>
+                    <field name="MsgId"/>
+                    <field name="AgentID"/>
+                    <field name="MsgType"/>
+                    <field name="Content"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- search -->
+        <record id="view_wechat_enterprise_receive_message_search" model="ir.ui.view">
+            <field name="name">wechat.enterprise.receive.message.search</field>
+            <field name="model">wechat.enterprise.receive.message</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="接收消息">
+                    <field name="Content" filter_domain="[('Content','ilike',self)]" string="消息内容"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="view_wechat_enterprise_receive_message_action" model="ir.actions.act_window">
+            <field name="name">接收消息</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wechat.enterprise.receive.message</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_wechat_enterprise_receive_message_tree"/>
+        </record>
+
+        <!-- menu -->
+        <menuitem action="view_wechat_enterprise_receive_message_action"
+                  id="menu_wechat_enterprise_receive_message_form" name="接收消息"
+                  parent="menu_wechat_enterprise_process" sequence="30"/>
+
+    </data>
+</openerp>
+

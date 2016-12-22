@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_wechat_enterprise_config_form">
+            <field name="name">wechat.enterprise.config.form</field>
+            <field name="model">wechat.enterprise.config</field>
+            <field name="arch" type="xml">
+                <form string="微信企业号">
+                    <header>
+                        <button string="微信获取应用列表" name="get_app" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="corp_id"/>
+                                <field name="corp_secret"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree -->
+        <record id="view_wechat_enterprise_config_tree" model="ir.ui.view">
+            <field name="name">wechat.enterprise.config.tree</field>
+            <field name="model">wechat.enterprise.config</field>
+            <field name="arch" type="xml">
+                <tree string="企业号">
+                    <field name="name"/>
+                    <field name='corp_secret'/>
+                    <field name="corp_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="view_wechat_enterprise_config_action" model="ir.actions.act_window">
+            <field name="name">微信企业号</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wechat.enterprise.config</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <!--<field name="view_id" ref="view_wechat_account_tree"/>-->
+        </record>
+
+        <!-- menu -->
+        <menuitem action="view_wechat_enterprise_config_action" id="menu_wechat_enterprise_config_form" name="微信企业号"
+                  parent="menu_wechat_enterprise_setup" sequence="20"/>
+
+    </data>
+</openerp>
+

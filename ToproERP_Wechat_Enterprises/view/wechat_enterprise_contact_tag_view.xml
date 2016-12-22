@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_wechat_enterprise_contact_tag_form">
+            <field name="name">wechat.enterprise.contact.tag.form</field>
+            <field name="model">wechat.enterprise.contact.tag</field>
+            <field name="arch" type="xml">
+                <form string="标签列表">
+                    <header>
+                        <button string="更新标签通讯录至微信" name="create_tag" type="object" class="oe_highlight"/>
+                        <!--<button string="从微信获取标签通讯录" name="get_tag" type="object" class="oe_highlight"/>-->
+                    </header>
+                    <sheet>
+                        <group string="标签信息">
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="tagid"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree -->
+        <record id="view_wechat_enterprise_contact_tag_tree" model="ir.ui.view">
+            <field name="name">wechat.enterprise.contact.tag.tree</field>
+            <field name="model">wechat.enterprise.contact.tag</field>
+            <field name="arch" type="xml">
+                <tree string="标签列表">
+                    <field name="name"/>
+                    <field name="tagid"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- search -->
+        <record id="view_wechat_enterprise_contact_tag_search" model="ir.ui.view">
+            <field name="name">wechat.enterprise.contact.tag.search</field>
+            <field name="model">wechat.enterprise.contact.tag</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="标签列表">
+                    <field name="name" filter_domain="[('name','ilike',self)]" string="标签名称"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="view_wechat_enterprise_contact_tag_action" model="ir.actions.act_window">
+            <field name="name">标签列表</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wechat.enterprise.contact.tag</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_wechat_enterprise_contact_tag_tree"/>
+        </record>
+
+        <!-- menu -->
+        <menuitem action="view_wechat_enterprise_contact_tag_action"
+                  id="menu_wechat_enterprise_contact_tag_form" name="标签列表"
+                  parent="menu_wechat_enterprise_contact" sequence="30"/>
+
+    </data>
+</openerp>
+
