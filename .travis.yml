@@ -19,6 +19,7 @@ virtualenv:
 install:
   - git clone http://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - export PYTHONPATH=${PYTHONPATH}:/home/travis/build/xhair/TopOdoo_Addons
   - travis_install_nightly
   - pip install xlrd
   - pip install xlutils
