@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--<record id="wechat_enterprise_hr_department_scheduler" model="ir.cron">-->
+            <!--<field name="name">update hr department</field>-->
+            <!--<field eval="True" name="active"/>-->
+            <!--<field name="interval_number">30</field>-->
+            <!--<field name="nextcall">2016/03/07 15:37:20</field>-->
+            <!--<field name="interval_type">minutes</field>-->
+            <!--<field name="numbercall">-1</field>-->
+            <!--<field name="doall" eval="False"/>-->
+            <!--<field name="model">hr.department</field>-->
+            <!--<field name="function">create_department</field>-->
+            <!--<field name="args">(None,)</field>-->
+        <!--</record>-->
+
+        <record model="ir.ui.view" id="view_hr_department_form">
+            <field name="name">hr.department.form</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="hr.view_department_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button string="更新所有部门至微信" name="create_department" type="object" class="oe_highlight"/>
+                        <!--<button string="更新当前部门至微信" name="create_current_department" type="object" class="oe_highlight"/>-->
+                    </header>
+                </xpath>
+                <!--<field name="parent_id" position="after">-->
+                    <!--<field name="wechat_department_id"/>-->
+                <!--</field>-->
+            </field>
+        </record>
+
+        <!-- tree -->
+        <record id="view_hr_department_tree" model="ir.ui.view">
+            <field name="name">hr.department.tree</field>
+            <field name="model">hr.department</field>
+            <field name="arch" type="xml">
+                <tree string="部门列表">
+                    <field name="name"/>
+                    <field name="parent_id"/>
+                    <field name='company_id'/>
+                    <field name="id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- search -->
+        <record id="view_hr_department_search" model="ir.ui.view">
+            <field name="name">hr.department.search</field>
+            <field name="model">hr.department</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="部门列表">
+                    <field name="name" filter_domain="[('name','ilike',self)]" string="部门"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="view_hr_department_action" model="ir.actions.act_window">
+            <field name="name">部门列表</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.department</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_hr_department_tree"/>
+        </record>
+
+        <!-- menu -->
+        <menuitem action="view_hr_department_action" id="menuhr_department_form" name="部门列表"
+                  parent="menu_wechat_enterprise_contact" sequence="20"/>
+
+    </data>
+</openerp>
+

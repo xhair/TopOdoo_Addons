@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_wechat_enterprise_app_form">
+            <field name="name">wechat.enterprise.app.form</field>
+            <field name="model">wechat.enterprise.app</field>
+            <field name="arch" type="xml">
+                <form string="应用配置">
+                    <header>
+                        <!--<button string="更新应用至微信" name="sync_app" type="object" class="oe_highlight"/>-->
+                        <button string="同步当前应用菜单至微信" name="update_app_menu" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="Token"/>
+                            </group>
+                            <group>
+                                <field name="agentid"/>
+                                <field name="type"/>
+                                <field name="EncodingAESKey"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="report_location_flag"/>
+                                <field name="isreportuser" attrs="{'invisible': [('type','in',('2'))]}"/>
+                            </group>
+                            <group>
+                                <field name="close"/>
+                                <field name="isreportenter" attrs="{'invisible': [('type','in',('2'))]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="home_url" attrs="{'invisible': [('type','in',('1'))]}"/>
+                            <field name="redirect_domain"/>
+                            <field name="description"/>.
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree -->
+        <record id="view_wechat_enterprise_app_tree" model="ir.ui.view">
+            <field name="name">wechat.enterprise.app.tree</field>
+            <field name="model">wechat.enterprise.app</field>
+            <field name="arch" type="xml">
+                <tree string="应用配置">
+                    <field name="agentid"/>
+                    <field name="name"/>
+                    <field name='type'/>
+                    <field name="redirect_domain"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- search -->
+        <record id="view_wechat_enterprise_app_search" model="ir.ui.view">
+            <field name="name">wechat.enterprise.app.search</field>
+            <field name="model">wechat.enterprise.app</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="应用配置">
+                    <field name="name" filter_domain="[('name','ilike',self)]" string="应用配置"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="view_wechat_enterprise_app_action" model="ir.actions.act_window">
+            <field name="name">应用配置</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wechat.enterprise.app</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_wechat_enterprise_app_tree"/>
+        </record>
+
+        <!-- menu -->
+        <menuitem action="view_wechat_enterprise_app_action" id="menu_wechat_enterprise_app_form" name="应用列表"
+                  parent="menu_wechat_enterprise_setup" sequence="20"/>
+
+    </data>
+</openerp>
+

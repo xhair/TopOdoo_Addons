@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- menu -->
+        <!--<menuitem name="企业号"-->
+          <!--id="menu_wechat_enterprise_manage"-->
+          <!--icon="fa-cog"-->
+          <!--web_icon="base,static/description/settings.png"-->
+          <!--sequence="10"-->
+          <!--groups="base.group_system"/>-->
+        <menuitem id="menu_wechat_enterprise" name="企业号" parent="ToproERP_Base.menu_wechat_manage" sequence="20"/>
+        <menuitem id="menu_wechat_enterprise_setup" name="企业号设置" parent="ToproERP_Base.menu_wechat_all_setup" sequence="120"/>
+        <menuitem id="menu_wechat_enterprise_contact" name="企业号通讯录" parent="menu_wechat_enterprise" sequence="110"/>
+
+        <menuitem id="menu_wechat_enterprise_process" name="企业号业务处理"  parent="menu_wechat_enterprise" sequence="100"/>
+
+    </data>
+</openerp>

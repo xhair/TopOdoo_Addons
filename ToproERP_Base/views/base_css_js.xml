@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © <2016> <ToproERP liujing>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+    <data>
+
+        <template id="assets_backend" name="coupon assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/ToproERP_Base/static/src/css/base.css"/>
+                <script type="text/javascript" src="/ToproERP_Base/static/src/js/disable_import_and_export.js"/>
+                <script type="text/javascript" src="/ToproERP_Base/static/src/js/list_view.js"/>
+                <script type="text/javascript" src="/ToproERP_Base/static/src/js/keyboard_shortcuts.js"/>
+            </xpath>
+        </template>
+
+        <template id="fav_ico" name="educat Icon" inherit_id="web.layout">
+        	<xpath expr="//html/head/link[1]" position="replace">
+        	 	<link rel="shortcut icon" href="/ToproERP_Base/static/src/img/favicon.png" type="image/x-icon"/>
+        	</xpath>
+        </template>
+
+    </data>
+</openerp>

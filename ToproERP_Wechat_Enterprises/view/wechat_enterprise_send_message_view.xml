@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_wechat_enterprise_send_message_form">
+            <field name="name">wechat.enterprise.send.message.form</field>
+            <field name="model">wechat.enterprise.send.message</field>
+            <field name="arch" type="xml">
+                <form string="发送消息">
+                    <header>
+                        <button string="发送本条消息" name="send_message" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group string="消息内容">
+                            <group>
+                                <field name="msgtype"/>
+                            </group>
+                            <group>
+                                <field name="agentid"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="content"
+                                       attrs="{'invisible': [('msgtype','in',('image','voice','video','file','news','mpnews'))]}"/>
+                            </group>
+                            <group>
+                                <field name="media_id"
+                                       attrs="{'invisible': [('msgtype','in',('text','news','mpnews'))]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="title"
+                                   attrs="{'invisible': [('msgtype','in',('image','voice','text','file'))]}"/>
+                            <field name="description"
+                                   attrs="{'invisible': [('msgtype','in',('text','image','voice','file','mpnews'))]}"/>
+                        </group>
+                        <group>
+                            <field name="url"
+                                   attrs="{'invisible': [('msgtype','in',('text','image','voice','file','mpnews','video'))]}"/>
+                            <field name="picurl"
+                                   attrs="{'invisible': [('msgtype','in',('text','image','voice','file','mpnews','video'))]}"/>
+                        </group>
+                        <group>
+                            <field name="thumb_media_id"
+                                   attrs="{'invisible': [('msgtype','in',('text','image','voice','file','news','video'))]}"/>
+                            <field name="author"
+                                   attrs="{'invisible': [('msgtype','in',('text','image','voice','file','news','video'))]}"/>
+                            <field name="content_source_url"
+                                   attrs="{'invisible': [('msgtype','in',('text','image','voice','file','news','video'))]}"/>
+                            <field name="news_content"
+                                   attrs="{'invisible': [('msgtype','in',('text','image','voice','file','news','video'))]}"/>
+                            <field name="digest"
+                                   attrs="{'invisible': [('msgtype','in',('text','image','voice','file','news','video'))]}"/>
+                            <field name="show_cover_pic"
+                                   attrs="{'invisible': [('msgtype','in',('text','image','voice','file','news','video'))]}"/>
+                        </group>
+                        <group string="消息发送的范围(若不填，则默认发送全体员工)">
+                            <field name="touser"/>
+                        </group>
+                        <group>
+                            <field name="toparty"/>
+                        </group>
+                        <!--<group>-->
+                            <!--<field name="totag"/>-->
+                        <!--</group>-->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree -->
+        <record id="view_wechat_enterprise_send_message_tree" model="ir.ui.view">
+            <field name="name">wechat.enterprise.send.message.tree</field>
+            <field name="model">wechat.enterprise.send.message</field>
+            <field name="arch" type="xml">
+                <tree string="发送消息">
+                    <field name="touser"/>
+                    <field name="toparty"/>
+                    <field name="msgtype"/>
+                    <field name="agentid"/>
+                    <field name="content"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- search -->
+        <record id="view_wechat_enterprise_send_message_search" model="ir.ui.view">
+            <field name="name">wechat.enterprise.send.message.search</field>
+            <field name="model">wechat.enterprise.send.message</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="发送消息">
+                    <field name="content" filter_domain="[('content','ilike',self)]" string="文字消息内容"/>
+                    <field name="title" filter_domain="[('title','ilike',self)]" string="图文消息标题"/>
+                    <field name="description" filter_domain="[('description','ilike',self)]" string="图文消息描述"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="view_wechat_enterprise_send_message_action" model="ir.actions.act_window">
+            <field name="name">发送消息</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wechat.enterprise.send.message</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_wechat_enterprise_send_message_tree"/>
+        </record>
+
+        <!-- menu -->
+        <menuitem action="view_wechat_enterprise_send_message_action"
+                  id="menu_wechat_enterprise_send_message_form" name="发送消息"
+                  parent="menu_wechat_enterprise_process" sequence="30"/>
+
+    </data>
+</openerp>
+

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="default_make_watermark_font" model="ir.config_parameter">
+            <field name="key">make_watermark_font</field>
+            <!--<field name="value" string="simsun.ttc"/>-->
+            <field name="value">/usr/share/fonts/truetype/msyhbd.ttc</field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--<record id="wechat_enterprise_hr_employee_scheduler" model="ir.cron">-->
+            <!--<field name="name">update hr employee</field>-->
+            <!--<field eval="True" name="active"/>-->
+            <!--<field name="interval_number">30</field>-->
+            <!--<field name="nextcall">2016/03/23 15:37:20</field>-->
+            <!--<field name="interval_type">minutes</field>-->
+            <!--<field name="numbercall">-1</field>-->
+            <!--<field name="doall" eval="False"/>-->
+            <!--<field name="model">hr.employee</field>-->
+            <!--<field name="function">create_employee</field>-->
+            <!--<field name="args">(None,)</field>-->
+        <!--</record>-->
+
+        <record model="ir.ui.view" id="view_hr_employee_form">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button string="更新所有员工至微信" name="create_employee" type="object" class="oe_highlight"/>
+                        <button string="获取员工微信头像" name="get_employee_image" type="object" class="oe_highlight"/>
+                    </header>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- tree -->
+        <record id="view_hr_employee_tree" model="ir.ui.view">
+            <field name="name">hr.employee.tree</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <tree string="员工列表">
+                    <field name="name_related"/>
+                    <field name="mobile_phone"/>
+                    <field name='job_id'/>
+                    <field name="gender"/>
+                    <field name="department_id"/>
+                    <!--<field name="wechat_contacts_id"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <!-- search -->
+        <record id="view_hr_employee_search" model="ir.ui.view">
+            <field name="name">hr.employee.search</field>
+            <field name="model">hr.employee</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="员工列表">
+                    <field name="name_related" filter_domain="[('name_related','ilike',self)]" string="员工"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="view_hr_employee_action" model="ir.actions.act_window">
+            <field name="name">员工列表</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_hr_employee_tree"/>
+        </record>
+
+        <!-- menu -->
+        <menuitem action="view_hr_employee_action" id="menu_hr_employeee_form" name="员工列表"
+                  parent="menu_wechat_enterprise_contact" sequence="20"/>
+
+    </data>
+</openerp>
+

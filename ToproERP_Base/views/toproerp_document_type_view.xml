@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © <2016> <ToproERP liujing>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+    <data>
+
+        <record id="toproerp_document_type_form" model="ir.ui.view">
+            <field name="name">toproerp_document_type_form</field>
+            <field name="model">toproerp.document.type</field>
+            <field name="arch" type="xml">
+                <form string="文档类型">
+                    <sheet>
+
+                        <group>
+                            <div class="div_width">
+                                <group>
+                                    <field name="document_type_no"/>
+                                    <field name="name"/>
+                                    <!--<field name="active"/>-->
+                                </group>
+                            </div>
+                            <div class="oe_button_box" name="button_box">
+                                <button name="toggle_active" type="object" class="oe_stat_button"
+                                        icon="fa-check">
+                                    <field name="active" widget="boolean_button"
+                                           options='{"terminology": "active"}'/>
+                                </button>
+                            </div>
+                        </group>
+                        <group>
+                            <div class="text_width">
+                                <group>
+                                    <field name="note"/>
+                                </group>
+                            </div>
+                        </group>
+                        <!--<group>-->
+                        <!--<div class="text_width">-->
+                        <!--<group>-->
+                        <!--<field name="active"/>-->
+                        <!--</group>-->
+                        <!--</div>-->
+                        <!--</group>-->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="toproerp_document_type_tree" model="ir.ui.view">
+            <field name="name">toproerp_document_type_tree</field>
+            <field name="model">toproerp.document.type</field>
+            <field name="arch" type="xml">
+                <tree string="文档类型">
+                    <field name="document_type_no"/>
+                    <field name="name"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="toproerp_document_type_view_search" model="ir.ui.view">
+            <field name="name">toproerp_document_type_view_search</field>
+            <field name="model">toproerp.document.type</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="document_type_no" string="编码" filter_domain="[('document_type_no','like',self)]"/>
+                    <field name="name" string="名称" filter_domain="[('name','like',self)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="toproerp_document_type_activity_action" model="ir.actions.act_window">
+            <field name="name">文档类型</field>
+            <field name="res_model">toproerp.document.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="toproerp_document_type_view_search"/>
+        </record>
+
+        <menuitem id="menu_toproerp_document_type" name="文档类型" parent="menu_toproerp_base_submenu"
+                  action="toproerp_document_type_activity_action"/>
+
+    </data>
+</openerp>
+

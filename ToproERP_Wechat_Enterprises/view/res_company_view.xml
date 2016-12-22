@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record model="ir.ui.view" id="view_res_company_form">
+            <field name="name">res.company.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button string="更新公司至企业号" name="create_company" type="object" class="oe_highlight"/>
+                    </header>
+                </xpath>
+                <!--<field name="website" position="after">-->
+                    <!--<field name="wechat_company_id"/>-->
+                <!--</field>-->
+            </field>
+        </record>
+
+        <!-- tree -->
+        <record id="view_res_company_tree" model="ir.ui.view">
+            <field name="name">res.company.tree</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <tree string="公司列表">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- search -->
+        <record id="view_res_company_search" model="ir.ui.view">
+            <field name="name">res.company.search</field>
+            <field name="model">res.company</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="公司列表">
+                    <field name="name" filter_domain="[('name','ilike',self)]" string="公司"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="view_res_company_action" model="ir.actions.act_window">
+            <field name="name">公司列表</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.company</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_res_company_tree"/>
+        </record>
+
+        <!-- menu -->
+        <menuitem action="view_res_company_action" id="menu_res_company_form" name="公司列表"
+                  parent="menu_wechat_enterprise_contact" sequence="20"/>
+
+    </data>
+</openerp>
+

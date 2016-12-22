@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+ToproERP_Base_ToproERP_Base_excel,toproerp.brands,model_toproerp_brands,ToproERP_Base.ToproERP_Base,1,1,1,0
+ToproERP_Base_toproerp_document_type_excel,toproerp.document.type,model_toproerp_document_type,ToproERP_Base.ToproERP_Base,1,1,1,0
+ToproERP_Base_toproerp_document_type_excel1,toproerp.document.type,model_toproerp_document_type,base.group_user,1,0,0,0
+ToproERP_Base_toproerp_document_type_excel2,toproerp.brands,model_toproerp_brands,base.group_user,1,0,0,0
+ToproERP_Car_Base_product_excel3,product.price.history,product.model_product_price_history,ToproERP_Base.ToproERP_Base,1,1,1,0
+ToproERP_Car_Base_product_product_excel,product.product,product.model_product_product,ToproERP_Base.ToproERP_Base,1,1,1,0
+ToproERP_Car_Base_product_template_excel,product.template,model_product_template,ToproERP_Base.ToproERP_Base,1,1,1,0
+ToproERP_Base_res_partner_excel2,res.partner,model_res_partner,base.group_user,1,1,1,0
+access_play_watermark,access_play_watermark,model_play_watermark,,1,0,0,0
+access_toproerp_common,access_toproerp_common,model_toproerp_common,,1,0,0,0
+access_report_set_style,access_report_set_style,model_report_set_style,,1,0,0,0

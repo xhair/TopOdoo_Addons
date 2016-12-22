@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_service_gld_order">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="report.internal_layout">
+                    <div class="page text-center">
+                        <h3>工作联系函</h3>
+                        <table class="table table-bordered mb0 table-condensed" style="font-size:18px;">
+                            <tr>
+                                <td>编号：</td>
+                                <td>
+                                    <strong t-esc="doc['name']"/>
+                                </td>
+                                <td>紧急程度：</td>
+                                <t t-if="doc['emergency']=='urgent'">
+                                    <td>
+                                        <strong>特急</strong>
+                                    </td>
+                                </t>
+                                <t t-if="doc['emergency']=='anxious'">
+                                    <td>
+                                        <strong>急</strong>
+                                    </td>
+                                </t>
+                                <t t-if="doc['emergency']=='general'">
+                                    <td>
+                                        <strong>一般</strong>
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <td>编制人：</td>
+                                <td>
+                                    <strong t-esc="doc.sponsor.name"/>
+                                </td>
+                                <td>日期：</td>
+                                <td>
+                                    <strong t-fieldtime="doc['started']"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>抄送：</td>
+                                <td colspan="3">
+                                    <strong t-esc="doc['copy_users_name']"/>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>标题：</td>
+                                <td colspan="3">
+                                    <strong t-esc="doc['subject']"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <xpre>
+                                        <strong t-raw="doc['content']"/>
+                                    </xpre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>附件：</td>
+                                <td colspan="3">
+                                    <strong t-esc="doc['att_names']"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <t t-if="doc.approver_opinions">
+                            <table class="table table-bordered mb0 table-condensed" style="font-size:18px;">
+                                <tr>
+                                    <td>审批人</td>
+                                    <td>公司</td>
+                                    <td>部门</td>
+                                    <td>审批意见</td>
+                                </tr>
+                                <t t-foreach="doc.approver_opinions" t-as="item">
+                                    <tr>
+                                        <td>
+                                            <strong t-esc="item.approver.name"/>
+                                        </td>
+                                        <td>
+                                            <strong t-esc="item.company_id"/>
+                                        </td>
+                                        <td>
+                                            <strong t-esc="item.approver_dept"/>
+                                        </td>
+                                        <td>
+                                            <strong t-esc="item.opinion"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </t>
+                        <div class="text-right" style="font-size:18px;">
+                            <strong t-esc="doc.sponsor.company_id.name"/>
+                            <strong t-esc="doc.dept"/>
+                            <strong t-esc="doc.started"/>
+                            印发
+                        </div>
+                        <div style="margin-bottom:10px;"></div>
+                        <div class="text-left" style="font-size:18px;">备注：特急指两个工作时内回复；急指一个工作日内回复；一般指两个工作日内回复。</div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_wechat_enterprise_receive_message_process_form">
+            <field name="name">wechat.enterprise.receive.message.process.form</field>
+            <field name="model">wechat.enterprise.receive.message.process</field>
+            <field name="arch" type="xml">
+                <form string="接收消息处理">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="message_key"/>
+                                <field name="class_name"/>
+                            </group>
+                            <group>
+                                <field name="message_type"/>
+                                <field name="agentID"/>
+                                <field name="method_name"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree -->
+        <record id="view_wechat_enterprise_receive_message_process_tree" model="ir.ui.view">
+            <field name="name">wechat.enterprise.receive.message.process.tree</field>
+            <field name="model">wechat.enterprise.receive.message.process</field>
+            <field name="arch" type="xml">
+                <tree string="接收消息处理">
+                    <field name="name"/>
+                    <field name="message_key"/>
+                    <field name="class_name"/>
+                    <field name="method_name"/>
+                    <field name="message_type"/>
+                    <field name="agentID"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- search -->
+        <record id="view_wechat_enterprise_receive_message_process_search" model="ir.ui.view">
+            <field name="name">wechat.enterprise.receive.message.process.search</field>
+            <field name="model">wechat.enterprise.receive.message.process</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="接收消息处理">
+                    <field name="message_key" filter_domain="[('message_key','ilike',self)]" string="关键字"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="view_wechat_enterprise_receive_message_process_action" model="ir.actions.act_window">
+            <field name="name">接收消息处理</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wechat.enterprise.receive.message.process</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_wechat_enterprise_receive_message_process_tree"/>
+        </record>
+
+        <!-- menu -->
+        <menuitem action="view_wechat_enterprise_receive_message_process_action"
+                  id="menu_wechat_enterprise_receive_message_process_form" name="接收消息处理"
+                  parent="menu_wechat_enterprise_process" sequence="30"/>
+
+    </data>
+</openerp>
+
