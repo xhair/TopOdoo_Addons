@@ -1,0 +1,117 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="expense_view_form">
+            <field name="name">expense_view_form</field>
+            <field name="model">expense.account</field>
+            <field name="arch" type="xml">
+                <form string="费用申请报销单">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        <button name="button_submit" type="object" string="提交" _context="{'active_id':id}"
+                                states="draft"/>
+                        <button name="button_recall" type="object" string="追回" _context="{'active_id':id}"
+                                states="pending_approval"/>
+                        <button name="%(button_confirm)d" type="action" string="确认放款" _context="{'active_id':id}"
+                                states="approval_pass"
+                                groups="ToproERP_Expense.group_manager,ToproERP_Expense.group_finance"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="applicant_id"/>
+                                <field name="expenses_sum"/>
+                            </group>
+                            <group>
+                                <field name="type_ids" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="relevance_account_ids" attrs="{'readonly':[('state','!=','draft')]}"
+                                       domain="[('account_name', '=', 'applicant_id')]"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="费用明细">
+                                <field name="details_ids" attrs="{'readonly':[('state','!=','draft')]}">
+                                    <form>
+                                        <group>
+                                            <field name="details_name"/>
+                                            <field name="details_start"/>
+                                            <field name="details_expenses"/>
+                                            <field name="details_remark"/>
+                                        </group>
+                                    </form>
+                                    <tree>
+                                        <field name="details_name"/>
+                                        <field name="details_start"/>
+                                        <field name="details_expenses"/>
+                                        <field name="details_remark"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="审批人">
+                                <form>
+                                    <field name="approval_ids" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                </form>
+                            </page>
+                        </notebook>
+                        <group>
+                            <field name="attachment" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="expense_view_tree">
+            <field name="name">expense_view_tree</field>
+            <field name="model">expense.account</field>
+            <field name="arch" type="xml">
+                <tree string="费用报销申请单">
+                    <field name="name"/>
+                    <field name="applicant_id"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="expense_view_search">
+            <field name="name">expense_view_search</field>
+            <field name="model">expense.account</field>
+            <field name="arch" type="xml">
+                <search string="费用报销申请单">
+                    <field name="name"/>
+                    <field name="applicant_id"/>
+                    <field name="date"/>
+                    <group string="Group by">
+                        <filter name="group_by_status" string="当前状态"
+                                context="{'group_by' : 'state'}"/>
+                        <filter name="group_by_id" string="订单号"
+                                context="{'group_by' : 'name'}"/>
+                        <filter name="group_by_applicant" string="申请人"
+                                context="{'group_by' : 'applicant_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="expense_view_action">
+            <field name="name">所有</field>
+            <field name="res_model">expense.account</field>
+            <field name="view_model">tree,form</field>
+        </record>
+
+        <record id="seq_expense" model="ir.sequence">
+            <field name="name">seq_expense</field>
+            <field name="company_id"/>
+            <field name="code">expense.account</field>
+            <field name="prefix">BXD%(year)s%(month)s%(day)s</field>
+            <field name="padding">4</field>
+        </record>
+
+        <menuitem id="expense_menu_top" name="费用报销"/>
+        <menuitem id="expense_menu_sub" name="费用报销" parent="expense_menu_top"/>
+        <menuitem id="expense_menu_request" name="所有"
+                  parent="expense_menu_sub"
+                  action="expense_view_action"/>
+    </data>
+</odoo>

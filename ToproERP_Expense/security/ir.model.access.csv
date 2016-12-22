@@ -1,0 +1,21 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+
+security_manager,security manager,model_expense_account,group_manager,1,1,1,1
+security_manager_details,security manager details,model_expense_account_details,group_manager,1,1,1,1
+security_manager_relevance,security manager relevance,model_relevance_account,group_manager,1,1,1,1
+security_manager_set,security manager set,model_set_expense_account,group_manager,1,1,1,1
+
+security_employee,security employee,model_expense_account,group_employee,1,1,1,0
+security_employee_details,security employee details,model_expense_account_details,group_employee,1,1,1,0
+security_employee_relevance,security employee relevance,model_relevance_account,group_employee,1,1,1,1
+security_employee_set,security employee set,model_set_expense_account,group_employee,1,0,0,0
+
+security_finance,security finance,model_expense_account,group_finance,1,1,1,0
+security_finance_details,security finance details,model_expense_account_details,group_finance,1,1,1,0
+security_finance_relevance,security finance relevance,model_relevance_account,group_finance,1,1,1,1
+security_finance_set,security finance set,model_set_expense_account,group_finance,1,1,1,1
+
+security_management,security management,model_expense_account,group_management,1,1,1,0
+security_management_details,security management details,model_expense_account_details,group_management,1,1,1,0
+security_management_relevance,security management relevance,model_relevance_account,group_management,1,1,1,1
+security_management_set,security management set,model_set_expense_account,group_management,1,0,0,0

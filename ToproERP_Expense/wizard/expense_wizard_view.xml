@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="expense_wizard_view_form">
+            <field name="name">expense_wizard_view_form</field>
+            <field name="model">confirm</field>
+            <field name="arch" type="xml">
+                <form string="确认放款">
+                    <sheet>
+                        <group>
+                            <field name="confirm_id"/>
+                            <field name="advance_way"/>
+                            <field name="should_pay"/>
+                            <field name="actual_pay"/>
+                        </group>
+                        <footer>
+                            <button name="submit" type="object" string="确认" class="oe_highlight"/>
+                            <button special="cancel" string="取消"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--<record model="ir.actions.act_window" id="button_confirm">-->
+            <!--<field name="name">确认放款</field>-->
+            <!--<field name="src_model">expense.account</field>-->
+            <!--<field name="res_model">confirm</field>-->
+            <!--<field name="view_model">form</field>-->
+            <!--<field name="target">new</field>-->
+        <!--</record>-->
+
+        <act_window id="button_confirm"
+                    name="确认放款"
+                    src_model="expense.account"
+                    res_model="confirm"
+                    view_mode="form"
+                    target="new"
+        />
+    </data>
+</odoo>
