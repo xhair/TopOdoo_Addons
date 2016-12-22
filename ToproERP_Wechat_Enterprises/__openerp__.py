@@ -39,6 +39,7 @@ ERP微信企业号模块
         "view/hr_employee_view.xml",
         "view/hr_department_view.xml",
         "view/res_company_view.xml",
+        "security/ir.model.access.csv"
     ],
     'demo': [
         #'demo/account_demo.xml',

@@ -12,3 +12,4 @@ syt_oa_gld_res_users,syt_oa_gld_res_users,base.model_res_users,base.group_user,1
 
 
 syt_oa_gld_hr_job,syt_oa_gld_hr_job,hr.model_hr_job,base.group_user,1,0,0,0
+access_syt_oa_gld_service,access_syt_oa_gld_service,model_syt_oa_gld_service,,1,0,0,0
