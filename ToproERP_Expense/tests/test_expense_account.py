@@ -38,6 +38,16 @@ class TestExpenseAccount(TransactionCase):
             'actual_pay': 200.00,
             'should_pay': 200.00,
         })
+        self.enterprise_conf = self.env['wechat.enterprise.config'].create({
+            'name': u'test',
+            'corp_id': u'test',
+            'corp_secret': u'test'
+        })
+
+    def test_enterprise_conf(self):
+        self.assertEquals(self.enterprise_conf.name, u'test')
+        self.assertEquals(self.enterprise_conf.corp_id, u'test')
+        self.assertEquals(self.enterprise_conf.corp_secret, u'test')
 
     def test_expenses(self):
         self.assertEquals(self.expense_account.expenses_sum, 399.00)  # 测试总金额
@@ -105,4 +115,3 @@ class TestExpenseAccount(TransactionCase):
             self.assertEquals(self.expense_account.state, 'approval_reject')
         else:
             raise exceptions.ValidationError(U"return_value不能为null!")
-
