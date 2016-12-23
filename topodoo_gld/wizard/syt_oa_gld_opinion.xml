@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © <2016> <gld liujing>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="gld_opinion_form_view">
+            <field name="name">填写审批意见</field>
+            <field name="model">gld.opinion</field>
+            <field name="arch" type="xml">
+                <form string="审批意见" version="8.0">
+                    <header>
+                        <button name="save_opinion" string="保存" type="object"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field readonly="True" name="approver"/>
+                        </group>
+                        <group>
+                            <field name="approver_dept" readonly="True"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="opinion"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="gld_opinion_tree_view" model="ir.ui.view">
+            <field name="name">审批意见</field>
+            <field name="type">tree</field>
+            <field name="model">gld.opinion</field>
+            <field name="arch" type="xml">
+                <tree string="审批意见" version="8.0">
+                    <field name="company_id" style="width: 1px;"/>
+                    <field name="approver_dept"/>
+                    <field name="approver" style="width:30%"/>
+                    <field name="mobile_phone"/>
+                    <field name="appov_date"/>
+                    <field name="opinion" style="width: 1px;"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_opinion_agree_gld" model="ir.actions.act_window">
+            <field name="name">同意</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">gld.opinion</field>
+            <field name="src_model">gld</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="action_opinion_disagree_gld" model="ir.actions.act_window">
+            <field name="name">不同意</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">gld.opinion</field>
+            <field name="src_model">gld</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</openerp>

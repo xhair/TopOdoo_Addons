@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © <2016> <gld liujing>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+    <data>
+        <template id="topodoo_wechat_gld.layout" name="Wechat_layout">
+            &lt;!DOCTYPE html&gt;
+            <html style="height:100%">
+                <head>
+                    <meta name="viewport"
+                          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+                    <link rel="stylesheet" href="/web/static/lib/bootstrap/css/bootstrap.css"/>
+                    <!--<link rel="stylesheet" href="/web/static/lib/fontawesome/css/font-awesome.css"/>-->
+                    <script src="/web/static/lib/jquery/jquery.js" type="text/javascript"/>
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/own.js"></script>-->
+                    <link rel="stylesheet" href="/topodoo_wechat_gld/static/src/css/weui.css"/>
+                    <link rel="stylesheet" href="/topodoo_wechat_gld/static/src/css/img.css"/>
+                    <!--<link rel="stylesheet" href="/topodoo_wechat_gld/static/src/css/bootstrap.min.css"/>-->
+                    <!--<link rel="stylesheet" href="/topodoo_wechat_gld/static/src/css/bootstrap-theme.min.css"/>-->
+                    <!--<link rel="stylesheet" href="/topodoo_wechat_gld/static/src/css/wechat.css"/>-->
+                    <link rel="stylesheet" href="/topodoo_wechat_gld/static/src/css/wechat_gld.css"/>
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/jquery.min.js"></script>-->
+                    <script src="/topodoo_wechat_gld/static/src/js/bootstrap.min.js"></script>
+                    <script src="/topodoo_wechat_gld/static/src/js/wechat_gld.js"></script>
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/test.js"></script>-->
+                    <t t-raw="head or ''"/>
+                    <META HTTP-EQUIV="pragma" CONTENT="no-cache"/>
+                    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"/>
+                    <META HTTP-EQUIV="expires" CONTENT="0"/>
+                </head>
+                <body>
+                    <t t-raw="0"/>
+                </body>
+            </html>
+        </template>
+
+        <!--我的工联单第一个页面-->
+        <template id="topodoo_wechat_gld.get_add_gld_first_page" name="Wechat_Add_Gld_First_Page">
+            <t t-call="topodoo_wechat_gld.layout">
+                <t t-set="head">
+                    <!--工联单js-->
+                    <script src="/topodoo_wechat_gld/static/src/js/core-min.js"></script>
+                    <script src="/topodoo_wechat_gld/static/src/js/base64.js"></script>
+                    <link rel="stylesheet" type="text/css"
+                          href="/topodoo_wechat_gld/jwysiwyg-master/lib/blueprint/screen.css"
+                          media="screen, projection"/>
+                    <link rel="stylesheet" type="text/css"
+                          href="/topodoo_wechat_gld/jwysiwyg-master/lib/blueprint/print.css" media="print"/>
+                    <link rel="stylesheet" href="../../jquery.wysiwyg.css" type="text/css"/>
+                    <script type="text/javascript" src="/topodoo_wechat_gld/jwysiwyg-master/lib/jquery.js"></script>
+                    <script type="text/javascript"
+                            src="/topodoo_wechat_gld/jwysiwyg-master/jquery.wysiwyg.js"></script>
+                    <script type="text/javascript"
+                            src="/topodoo_wechat_gld/jwysiwyg-master/controls/wysiwyg.image.js"></script>
+                    <script type="text/javascript"
+                            src="/topodoo_wechat_gld/jwysiwyg-master/controls/wysiwyg.link.js"></script>
+                    <script type="text/javascript"
+                            src="/topodoo_wechat_gld/jwysiwyg-master/controls/wysiwyg.table.js"></script>
+                    <title>新建工联单</title>
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/wechat_gld.js"></script>-->
+                </t>
+                <body onload="get_user_image()">
+                    <!--数据加载动画-->
+                    <div id="loadingToast" class="weui_loading_toast" style="display:none;">
+                        <div class="weui_mask_transparent"></div>
+                        <div class="weui_toast">
+                            <div class="weui_loading">
+                                <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+                            </div>
+                            <p class="weui_toast_content">跳转中</p>
+                        </div>
+                    </div>
+                    <div class="div_user" id="div_user">
+                    </div>
+                    <div class="div_temp">
+                        <div class="weui_cells weui_cells_access div_temp_type">
+                            <select class="form-control temp_type" name="temp_type_name" id="temp_type_id"
+                                    onchange="get_temp(this)">
+                                <option value="0">
+                                    模板类型
+                                </option>
+                                <t t-foreach="temp_type" t-as="item">
+                                    <option t-attf-value="{{item.id}}">
+                                        <t t-raw="item.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                            <p>></p>
+                            <div class="div_xinjian_shixian"></div>
+                            <select class="form-control temp" name="temp_name" id="temp_id"
+                                    onchange="get_title(this,2)">
+                                <option value="0">
+                                    模板
+                                </option>
+                            </select>
+                            <p>></p>
+                        </div>
+                        <form>
+
+
+                            <div class="weui_cells weui_cells_access div_yi_biaoti">
+                                <a class="weui_cell div_yi_a">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input id="title" class="gld-form-control div_yi_biaoti_input"
+                                               placeholder="工联单标题"
+                                               value=""></input>
+                                    </div>
+                                </a>
+
+                            </div>
+
+                            <div class="weui_cells weui_cells_access div_yi_biaoti">
+                                <!--<a class="weui_cell div_yi_content_a">-->
+                                <!--<pre id="text" style="width:100%;border:none"></pre>-->
+                                <textarea id="text" placeholder="工联单正文"></textarea>
+                                <!--</a>-->
+                            </div>
+                            <span id="hide_emergency" style="display:none"></span>
+                            <t t-foreach="user" t-as="item">
+                                <t t-if="(user)">
+                                    <input id="user_id" t-attf-value="{{item.id}}" style="display:none"></input>
+                                </t>
+                            </t>
+                            <div class="bottom_button">
+                                <a class="weui_btn weui_btn_primary div_next" onclick="next_gld()">下一步
+                                </a>
+                            </div>
+                            <div class="weui_toast" id="weui_toast" style="display:none">
+                                <i class="weui_icon_toast"></i>
+                                <p class="weui_toast_content">
+                                    <span id="weui_toast_span"></span>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="space"></div>
+                </body>
+            </t>
+        </template>
+
+        <!--我的工联单第二个页面-->
+        <template id="topodoo_wechat_gld.get_add_gld_second_page" name="Wechat_Add_Gld_Second_Page">
+            <t t-call="topodoo_wechat_gld.layout">
+                <t t-set="head">
+                    <!--工联单js-->
+                    <script src="/topodoo_wechat_gld/static/src/js/wechat_sdk.js"></script>
+                    <script src="/topodoo_wechat_gld/static/src/js/sha1.js"></script>
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/wechat_gld.js"></script>-->
+                    <script src="/topodoo_wechat_gld/static/src/js/wechat_config.js"></script>
+                    <script src="/topodoo_wechat_gld/static/src/js/wechat_demo.js"></script>
+                    <title>新建工联单</title>
+                </t>
+                <body onload="get_Urgency()">
+                    <div class="div_temp">
+                        <div class="weui_cells weui_cells_access div_yi_biaoti">
+                            <select class="form-control temp_type" name="urgency_name" id="urgency_id">
+                            </select>
+                            <p>紧急程度</p>
+                        </div>
+                        <div class="weui_cells weui_cells_access div_yi_biaoti">
+                            <a class="weui_cell">
+                                <div class="weui_cell_bd weui_cell_primary div_temp_type_wenzi">
+                                    添加附件
+                                </div>
+                                <span id="image_name" class="image_name_span"></span>
+                                <span id="enclosure" style="display:block"></span>
+                                <div>
+                                    <img src='/topodoo_wechat_gld/static/src/img/jiahao.png'
+                                         class="aligncenter jiahao" onclick="add_enclosure()" id="add_fujian_id"/>
+                                </div>
+                                <span id="attachment_id" style="display:none"></span>
+                            </a>
+                        </div>
+                        <div class="weui_cells weui_cells_access div_zhuyishixiang">
+                            <a class="weui_cell">
+                                <div class="weui_cell_bd weui_cell_primary">
+                                    <div class="div_float_left">
+                                        <img src='/topodoo_wechat_gld/static/src/img/wenhao.png'
+                                             class="aligncenter wenhao"/>
+                                    </div>
+                                    <div class="add_pdf_div">
+                                        <font class="add_pdf">
+                                            附件仅允许添加图片
+                                        </font>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="weui_cells weui_cells_access div_add_approvers">
+                            <a class="weui_cell">
+                                <div class="weui_cell_bd weui_cell_primary div_add_approvers_wenzi">
+                                    添加审批人
+                                    <span id="hangshu" style="display:none"></span>
+                                </div>
+                                <div>
+                                    <img src='/topodoo_wechat_gld/static/src/img/jiahao.png'
+                                         class="aligncenter jiahao" onclick="add_newrow()"/>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="weui_toast" id="weui_toast" style="display:none">
+                            <i class="weui_icon_toast"></i>
+                            <p class="weui_toast_content">
+                                <span id="weui_toast_span"></span>
+                            </p>
+                        </div>
+                        <div id="approvers_list">
+                            <div id="add_approver" class="add_approver_div">
+                                <div class="add_approver_div">
+                                    <div class="add_approver_span_duan left_">
+                                        姓名
+                                    </div>
+                                    <div class="personal_info">
+                                        个人信息
+                                    </div>
+                                    <!--<div class="phone_">-->
+                                    <!--电话-->
+                                    <!--</div>-->
+                                    <!--<div class="add_approver_span">-->
+                                    <!--所属公司-->
+                                    <!--</div>-->
+                                    <!--<div class="add_approver_span_duan">-->
+                                    <!--部门-->
+                                    <!--</div>-->
+                                    <div class="add_approver_span_tubiao">
+                                        操作
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--<div class="weui_cells weui_cells_access div_add_copyusers">-->
+                        <!--<a class="weui_cell">-->
+                        <!--<div class="weui_cell_bd weui_cell_primary div_add_approvers_wenzi">-->
+                        <!--添加抄送人-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<img src='/topodoo_wechat_gld/static/src/img/jiahao.png'-->
+                        <!--class="aligncenter jiahao"/>-->
+                        <!--</div>-->
+                        <!--</a>-->
+                        <!--</div>-->
+                        <t t-if="template_type">
+                            <input id="template_type_id" t-attf-value="{{template_type}}" style="display:none"></input>
+                        </t>
+                        <t t-if="template">
+                            <input id="template_id" t-attf-value="{{template}}" style="display:none"></input>
+                        </t>
+                        <t t-if="title">
+                            <input id="title_id" t-attf-value="{{title}}" style="display:none"></input>
+                        </t>
+                        <t t-if="text">
+                            <input id="text_id" t-attf-value="{{text}}" style="display:none"></input>
+                        </t>
+                        <t t-if="emergency">
+                            <input id="emergency_id" t-attf-value="{{emergency}}" style="display:none"></input>
+                        </t>
+                        <t t-foreach="user" t-as="item">
+                            <t t-if="(user)">
+                                <input id="user_id" t-attf-value="{{item.id}}" style="display:none"></input>
+                            </t>
+                        </t>
+                        <form>
+                            <div class="div_baocun">
+                                <div class="div_baocun_">
+                                    <a href="javascript:;" class="weui_btn weui_btn_primary div_baocun_a"
+                                       onclick="save()">
+                                        保存
+                                    </a>
+                                </div>
+                                <div class="div_baocunshenpi">
+                                    <a href="javascript:;" class="weui_btn weui_btn_primary div_baocunshenpi_a"
+                                       onclick="save_and_submit()">
+                                        保存并提交审批
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="space"></div>
+                </body>
+            </t>
+        </template>
+
+        <!--我发起的工联单-->
+        <template id="topodoo_wechat_gld.list_faqi" name="Wechat_List_Faqi">
+            <t t-call="topodoo_wechat_gld.layout">
+                <t t-set="head">
+                    <!--工联单js-->
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/wechat_gld.js"></script>-->
+                    <script src="/topodoo_wechat_gld/static/src/js/gld_faqi.js"></script>
+                    <title>我发起的工联单</title>
+                </t>
+                <!--<div class="list_div_title">-->
+                <!--&lt;!&ndash;<img src='/topodoo_wechat_gld/static/src/img/fanhui.png'&ndash;&gt;-->
+                <!--&lt;!&ndash;class="aligncenter fanhui" onclick="goback()"/>&ndash;&gt;-->
+                <!--<span class="gldNO_">我发起的工联单</span>-->
+                <!--</div>-->
+
+                <body class="list_body" id="list_faqi_body_div" onload="get_faqi_list()">
+                    <t t-foreach="user" t-as="item">
+                        <t t-if="(user)">
+                            <input id="user_id" t-attf-value="{{item.id}}" style="display:none"></input>
+                        </t>
+                    </t>
+                </body>
+                <t t-if="len(data)==0">
+                    <div class="no_coupon"
+                         style="width: 100%;height: 120px;background-color: inherit;padding: 50px auto;font-size: 20px;text-align: center;">
+                        <p class="no_text" style="padding: 40px 0px;color: #C8C8C8;">当前没有我发起的工联单</p>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <!--待办工联单列表-->
+        <template id="topodoo_wechat_gld.list_daiban" name="Wechat_List_Daiban">
+            <t t-call="topodoo_wechat_gld.layout">
+                <t t-set="head">
+                    <!--工联单js-->
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/wechat_gld.js"></script>-->
+                    <script src="/topodoo_wechat_gld/static/src/js/gld_daiban.js"></script>
+                    <title>待处理的工联单</title>
+                </t>
+                <!--<div class="list_div_title">-->
+                <!--&lt;!&ndash;<img src='/topodoo_wechat_gld/static/src/img/fanhui.png'&ndash;&gt;-->
+                <!--&lt;!&ndash;class="aligncenter fanhui" onclick="goback()"/>&ndash;&gt;-->
+                <!--<span class="gldNO_">等待我处理的工联单</span>-->
+                <!--</div>-->
+
+                <body class="list_body" id="list_daiban_body_div" onload="get_daiban_list()">
+                    <t t-foreach="user" t-as="item">
+                        <t t-if="(user)">
+                            <input id="user_id" t-attf-value="{{item.id}}" style="display:none"></input>
+                        </t>
+                    </t>
+                </body>
+                <t t-if="len(data)==0">
+                    <div class="no_coupon"
+                         style="width: 100%;height: 120px;background-color: inherit;padding: 50px auto;font-size: 20px;text-align: center;">
+                        <p class="no_text" style="padding: 40px 0px;color: #C8C8C8;">当前无待处理工联单</p>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <!--已办工联单-->
+        <template id="topodoo_wechat_gld.list_yiban" name="Wechat_List_Yiban">
+            <t t-call="topodoo_wechat_gld.layout">
+                <t t-set="head">
+                    <!--工联单js-->
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/wechat_gld.js"></script>-->
+                    <script src="/topodoo_wechat_gld/static/src/js/gld_yiban.js"></script>
+                    <title>已办工联单</title>
+                </t>
+                <!--<div class="list_div_title">-->
+                <!--&lt;!&ndash;<img src='/topodoo_wechat_gld/static/src/img/fanhui.png'&ndash;&gt;-->
+                <!--&lt;!&ndash;class="aligncenter fanhui" onclick="goback()"/>&ndash;&gt;-->
+                <!--<span class="gldNO_">已办工联单</span>-->
+                <!--</div>-->
+
+                <body class="list_body" id="list_yiban_body_div" onload="get_yiban_list()">
+                    <t t-foreach="user" t-as="item">
+                        <t t-if="(user)">
+                            <input id="user_id" t-attf-value="{{item.id}}" style="display:none"></input>
+                        </t>
+                    </t>
+                </body>
+                <t t-if="len(data)==0">
+                    <div class="no_coupon"
+                         style="width: 100%;height: 120px;background-color: inherit;padding: 50px auto;font-size: 20px;text-align: center;">
+                        <p class="no_text" style="padding: 40px 0px;color: #C8C8C8;">当前没有已办工联单</p>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <!--工联单详情页面-->
+        <template id="topodoo_wechat_gld.xiangqing" name="Wechat_XiangQing">
+            <t t-call="topodoo_wechat_gld.layout">
+                <t t-set="head">
+                    <title>工联单详情</title>
+                    <!--工联单js-->
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/wechat_gld.js"></script>-->
+                </t>
+                <body class="list_body" id="list_body_div_info" onload="get_gld_info();caozuo_anniu()">
+                    <!--数据加载动画-->
+                    <div id="loadingToast" class="weui_loading_toast" style="display:none;">
+                        <div class="weui_mask_transparent"></div>
+                        <div class="weui_toast">
+                            <div class="weui_loading">
+                                <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+                                <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+                            </div>
+                            <p class="weui_toast_content">跳转中</p>
+                        </div>
+                    </div>
+
+                    <div class="huaru_div" id="huaru_div">
+                        <div id="daiban_sponar" class="daiban_opinion_t_class">
+                            <t t-foreach="gld_obj" t-as="item">
+                                <t t-if="(item.state=='draft' and curr_approver_is_luser==True)">
+                                    <div class="huaru_div_" onclick="gld_state_sent()">
+                                        <img src='/topodoo_wechat_gld/static/src/img/tjsp_tubiao.png'
+                                             class='aligncenter tubiao'/>
+                                        <span class="huaru_div_span">提交审批</span>
+                                    </div>
+                                </t>
+                                <t t-if="(item.state=='pending' or item.state=='pass')">
+                                    <div class="huaru_div_" onclick="view_appr(1)">
+                                        <img src='/topodoo_wechat_gld/static/src/img/tjspr_tubiao.png'
+                                             class='aligncenter tubiao'/>
+                                        <span class="huaru_div_span">添加审批人</span>
+                                    </div>
+                                </t>
+                                <t t-if="(item.state=='pending' and curr_approver_is_luser==True)">
+                                    <div class="huaru_div_" onclick="gld_state_draft()">
+                                        <img src='/topodoo_wechat_gld/static/src/img/zh_tubiao.png'
+                                             class='aligncenter tubiao'/>
+                                        <span class="huaru_div_span">追回</span>
+                                    </div>
+                                </t>
+                                <t t-if="(item.state=='through' and curr_approver_is_luser==True)">
+                                    <div class="huaru_div_" onclick="gld_finish_to_pass()">
+                                        <img src='/topodoo_wechat_gld/static/src/img/jxsp_tubiao.png'
+                                             class='aligncenter tubiao'/>
+                                        <span class="huaru_div_span">继续审批</span>
+                                    </div>
+                                </t>
+                                <t id="zf"
+                                   t-if="(item.state=='pending' or item.state=='pass') and (curr_approver_is_luser==True)">
+                                    <div id="zf_div" class="huaru_div_" onclick="gld_state_cancel()">
+                                        <img src='/topodoo_wechat_gld/static/src/img/zf_tubiao.png'
+                                             class='aligncenter tubiao'/>
+                                        <span class="huaru_div_span">作废</span>
+                                    </div>
+                                </t>
+                                <t t-if="(item.state!='n_through' or item.state!='cancel')">
+                                    <div class="huaru_div_" onclick="view_appr(2)">
+                                        <img src='/topodoo_wechat_gld/static/src/img/cs_tubiao.png'
+                                             class='aligncenter tubiao'/>
+                                        <span class="huaru_div_span">抄送</span>
+                                    </div>
+                                </t>
+                                <t t-if="(item.state=='pending' or item.state=='pass') and (uid_is_approval==True)">
+                                    <div class="huaru_div_" onclick="tongyi()">
+                                        <img src='/topodoo_wechat_gld/static/src/img/ty_tubiao.png'
+                                             class='aligncenter tubiao'/>
+                                        <span class="huaru_div_span">同意</span>
+                                    </div>
+                                    <div class="huaru_div_" onclick="butongyi()">
+                                        <img src='/topodoo_wechat_gld/static/src/img/bty_tubiao.png'
+                                             class='aligncenter tubiao'/>
+                                        <span class="huaru_div_span">不同意</span>
+                                    </div>
+                                    <div class="huaru_div_" onclick="waiver()">
+                                        <img src='/topodoo_wechat_gld/static/src/img/bzzqfw_tubiao.png'
+                                             class='aligncenter tubiao'/>
+                                        <span class="huaru_div_span">不在职权内</span>
+                                    </div>
+                                </t>
+                            </t>
+                        </div>
+                        <div id="daiban_appr" class="daiban_opinion_t_class">
+                            <t t-foreach="gld_obj" t-as="item">
+                                <!--<t t-if="(item.state!='n_through') or (item.state!='cancel')">-->
+                                <!--<div class="huaru_div_" onclick="view_appr(2)">-->
+                                <!--<img src='/topodoo_wechat_gld/static/src/img/cs_tubiao.png'-->
+                                <!--class='aligncenter tubiao'/>-->
+                                <!--<span class="huaru_div_span">抄送</span>-->
+                                <!--</div>-->
+                                <!--</t>-->
+                                <!--<t t-if="(item.state=='pending') or (item.state=='pass') or (item.state=='draft')">-->
+                                <!--<div class="huaru_div_" onclick="view_appr(1)">-->
+                                <!--<img src='/topodoo_wechat_gld/static/src/img/tjspr_tubiao.png'-->
+                                <!--class='aligncenter tubiao'/>-->
+                                <!--<span class="huaru_div_span">添加审批人</span>-->
+                                <!--</div>-->
+                                <!--</t>-->
+                                <!--<t t-if="(item.state=='pending' or item.state=='pass')">-->
+                                <!--<div class="huaru_div_" onclick="tongyi()">-->
+                                <!--<img src='/topodoo_wechat_gld/static/src/img/ty_tubiao.png'-->
+                                <!--class='aligncenter tubiao'/>-->
+                                <!--<span class="huaru_div_span">同意</span>-->
+                                <!--</div>-->
+                                <!--<div class="huaru_div_" onclick="butongyi()">-->
+                                <!--<img src='/topodoo_wechat_gld/static/src/img/bty_tubiao.png'-->
+                                <!--class='aligncenter tubiao'/>-->
+                                <!--<span class="huaru_div_span">不同意</span>-->
+                                <!--</div>-->
+                                <!--<div class="huaru_div_" onclick="waiver()">-->
+                                <!--<img src='/topodoo_wechat_gld/static/src/img/bzzqfw_tubiao.png'-->
+                                <!--class='aligncenter tubiao'/>-->
+                                <!--<span class="huaru_div_span">不在职权内</span>-->
+                                <!--</div>-->
+                                <!--</t>-->
+                            </t>
+                        </div>
+                        <!--<div id="chaosong_appr" class="daiban_opinion_t_class">-->
+                        <!--<t t-foreach="gld_obj" t-as="item">-->
+                        <!--<t t-if="(item.state!='n_through') or (item.state!='cancel')">-->
+                        <!--<div class="huaru_div_" onclick="view_appr(2)">-->
+                        <!--<img src='/topodoo_wechat_gld/static/src/img/cs_tubiao.png'-->
+                        <!--class='aligncenter tubiao'/>-->
+                        <!--<span class="huaru_div_span">抄送</span>-->
+                        <!--</div>-->
+                        <!--</t>-->
+                        <!--</t>-->
+                        <!--</div>-->
+                    </div>
+
+                    <div class="weui_dialog_confirm dikuang" id="dialog1">
+                        <div class="weui_mask"></div>
+                        <div class="weui_dialog">
+                            <div class="weui_dialog_hd">
+                                <strong class="weui_dialog_title font">审批意见</strong>
+                                <span>(
+                                    <span id="rukou"></span>
+                                </span>
+                            </div>
+                            <div class="weui_dialog_bd">
+                                <textarea type="tel" class="class_div" id="opinion_text"
+                                          placeholder="审批意见"></textarea>
+                            </div>
+                            <div class="weui_dialog_ft">
+                                <a href="javascript:;" class="weui_btn_dialog default font" onclick="quxiao()">取消审批</a>
+                                <a href="javascript:;" class="weui_btn_dialog primary font" onclick="save_opinion()">
+                                    确定审批
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="list_div_title" id="list_body_div_info_name" style="clear:both">-->
+
+                    <!--</div>-->
+                    <div class="weui_toast" id="weui_toast" style="display:none">
+                        <i class="weui_icon_toast"></i>
+                        <p class="weui_toast_content">
+                            <span id="weui_toast_span"></span>
+                        </p>
+                    </div>
+                    <div class="list_div_title_2" id="info_div_2" style="clear:both">
+                        <span style="display:none" id="qubie"></span>
+                        <div style="width:25%;height:60px;float:left" onclick="view_enclosure()">
+                            <t t-if="attachment!=0">
+                                <p class="_message_number">
+                                    <t t-raw="attachment"/>
+                                </p>
+                            </t>
+                            <div style="height:30px;">
+                                <img src='/topodoo_wechat_gld/static/src/img/fujian.png'
+                                     class='aligncenter opinion_anniu'/>
+                            </div>
+                            <div style="height:20px;line-height:2px;">附件</div>
+                        </div>
+
+                        <div style="width:25%;height:60px;float:left" onclick="view_opinion()">
+                            <t t-if="opinions!=0">
+                                <p class="_message_number">
+                                    <t t-raw="opinions"/>
+                                </p>
+                            </t>
+                            <div style="height:30px;line-height:40px;">
+                                <img src='/topodoo_wechat_gld/static/src/img/shenpi.png'
+                                     class='aligncenter opinion_anniu'/>
+                            </div>
+                            <div style="height:20px;line-height:2px;">审批意见</div>
+                        </div>
+
+                        <div style="width:25%;height:60px;float:left" onclick="select_appr_copy_user()">
+                            <t t-if="copy_users!=0">
+                                <p class="_message_number">
+                                    <t t-raw="copy_users"/>
+                                </p>
+                            </t>
+                            <div style="height:30px;line-height:40px;">
+                                <img src='/topodoo_wechat_gld/static/src/img/chaosongren.png'
+                                     class='aligncenter opinion_anniu'/>
+                            </div>
+                            <div style="height:20px;line-height:2px;">抄送人</div>
+                        </div>
+
+                        <div style="width:25%;height:60px;float:left" onclick="tiaozhuan_sns()">
+                            <t t-if="messages!=0">
+                                <p class="_message_number">
+                                    <t t-raw="messages"/>
+                                </p>
+                            </t>
+                            <div style="height:30px;line-height:40px;">
+                                <img src='/topodoo_wechat_gld/static/src/img/gengduoxiaoxi.png'
+                                     class='aligncenter opinion_anniu'/>
+                            </div>
+                            <div style="height:20px;line-height:2px;">更多消息</div>
+                        </div>
+                    </div>
+                </body>
+            </t>
+        </template>
+
+
+        <!--查看日志SNS-->
+        <template id="topodoo_wechat_gld.get_sns_html" name="Wechat_Select_SNS">
+            <t t-call="topodoo_wechat_gld.layout">
+                <t t-set="head">
+                    <!--工联单js-->
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/wechat_gld.js"></script>-->
+                    <title>更多信息</title>
+                </t>
+
+                <body class="list_body" id="select_sns_body_div" onload="get_sns()">
+                    <div id="div_sns">
+
+                    </div>
+                </body>
+            </t>
+        </template>
+
+        <!--查看附件列表页面-->
+        <template id="topodoo_wechat_gld.select_enclosure" name="Wechat_Select_Enclosure">
+            <t t-call="topodoo_wechat_gld.layout">
+                <t t-set="head">
+                    <title>附件</title>
+                </t>
+                <body class="list_body" id="select_enclosure_body_div">
+                    <t t-if="len(attachments)==0">
+                        <div class="no_coupon"
+                             style="width: 100%;height: 120px;background-color: inherit;padding: 50px auto;font-size: 20px;text-align: center;">
+                            <p class="no_text" style="padding: 40px 0px;color: #C8C8C8;">该工联单无附件</p>
+                        </div>
+                    </t>
+                    <div>
+                        <t t-foreach="attachments" t-as="item">
+                            <a t-attf-href="/WechatEnterprise/show_attatchment/{{item.id}}">
+                                <div class="mr">
+                                    <div class="row">
+                                        <div class="col-xs-6 l">
+                                            <img class="smallImg"
+                                                 t-att-src="'/WechatEnterprise/image/ir.attachment/%s/datas' % item.id"/>
+                                        </div>
+                                        <div class="col-xs-6 r text_r">
+                                            <t t-esc="item.name"></t>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="line"></div>
+                        </t>
+                    </div>
+                </body>
+            </t>
+        </template>
+
+        <!--查询审批意见-->
+        <template id="topodoo_wechat_gld.select_opinion" name="Wechat_Select_Opinion">
+            <t t-call="topodoo_wechat_gld.layout">
+                <t t-set="head">
+                    <title>审批意见</title>
+                    <!--工联单js-->
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/wechat_gld.js"></script>-->
+                </t>
+                <body class="list_body" id="list_body_div_info" onload="get_opinion()">
+                    <!--<div class="list_div_title" id="list_body_div_info_name" style="clear:both">-->
+                    <!--</div>-->
+                    <div id="daiban_opinion_t" class="daiban_opinion_t_class">
+                    </div>
+                    <t t-if="len(opinion)==0">
+                        <div class="no_coupon"
+                             style="width: 100%;height: 120px;background-color: inherit;padding: 50px auto;font-size: 20px;text-align: center;">
+                            <p class="no_text" style="padding: 40px 0px;color: #C8C8C8;">当前没有审批意见</p>
+                        </div>
+                    </t>
+                    <div id="select_opinion_div">
+                    </div>
+                </body>
+            </t>
+        </template>
+
+        <!--添加审批人/抄送人-->
+        <template id="topodoo_wechat_gld.view_appr" name="Wechat_View_Appr">
+            <t t-call="topodoo_wechat_gld.layout">
+                <t t-set="head">
+                    <title>
+                        <t t-raw="name"></t>
+                    </title>
+                    <!--工联单js-->
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/wechat_gld.js"></script>-->
+                </t>
+                <body class="list_body" id="add_appr_div" onload="get_title_user()">
+
+                    <!--<div class="list_div_title">-->
+                    <!--&lt;!&ndash;<div style="width:30%;float:left;text-align:left;margin-left:12px;" onclick="goback()">取消</div>&ndash;&gt;-->
+                    <!--<div style="width:100%;float:left;text-align:center">添加-->
+                    <!--<span id="title_user"></span>-->
+                    <!--</div>-->
+                    <!--<div style="width:30%;float:left;text-align:right;margin-right:12px;">-->
+                    <!--&lt;!&ndash;完成&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <div style="clear:both;width:100%;height:40px;margin-top:10px;">
+                        <div style="">
+                            <!--<div class="name_title">-->
+                            <!--姓名-->
+                            <!--</div>-->
+                            <!--数据加载动画-->
+                            <div id="loadingToast" class="weui_loading_toast" style="display:none;">
+                                <div class="weui_mask_transparent"></div>
+                                <div class="weui_toast">
+                                    <div class="weui_loading">
+                                        <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+                                        <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+                                        <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+                                        <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+                                        <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+                                        <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+                                        <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+                                        <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+                                        <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+                                        <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+                                        <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+                                        <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+                                    </div>
+                                    <p class="weui_toast_content">数据加载中</p>
+                                </div>
+                            </div>
+                            <!--提示-->
+                            <div class="weui_dialog_alert" id="dialog2" style="display: none;">
+                                <div class="weui_mask"></div>
+                                <div class="weui_dialog">
+                                    <div class="weui_dialog_hd">
+                                        <strong class="weui_dialog_title">温馨提示</strong>
+                                    </div>
+                                    <div class="weui_dialog_bd">查无此人</div>
+                                    <div class="weui_dialog_ft">
+                                        <a onclick="close_dialog()" class="weui_btn_dialog primary">确定</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_box">
+                                <input type="text" id="user_name" placeholder="输入姓名查询"></input>
+                            </div>
+                            <div class="search_button">
+                                <button onclick="get_user()">
+                                    查询
+                                </button>
+                            </div>
+                        </div>
+                        <div id="appr_list" style="clear:both">
+                            <div class="weui_panel_bd" id="weui_panel_bd">
+                            </div>
+                        </div>
+                        <div class="weui_toast" id="weui_toast" style="display:none">
+                            <i class="weui_icon_toast"></i>
+                            <p class="weui_toast_content">
+                                <span id="weui_toast_span"></span>
+                            </p>
+                        </div>
+                    </div>
+                </body>
+            </t>
+        </template>
+
+
+        <!--查看审批人-->
+        <template id="topodoo_wechat_gld.select_appr_copy_user" name="Wechat_Select_Appr_Copy_User">
+            <t t-call="topodoo_wechat_gld.layout">
+                <t t-set="head">
+                    <title>查看抄送人</title>
+                    <!--工联单js-->
+                    <!--<script src="/topodoo_wechat_gld/static/src/js/wechat_gld.js"></script>-->
+                </t>
+                <body class="list_body" id="add_appr_div" onload="get_copy_user()">
+                    <!--<div class="list_div_title">-->
+                    <!--&lt;!&ndash;<div style="width:30%;float:left;text-align:left;margin-left:12px;" onclick="goback()">取消</div>&ndash;&gt;-->
+                    <!--<div style="width:100%;text-align:center">抄送人列表-->
+                    <!--<span id="title_user"></span>-->
+                    <!--</div>-->
+                    <!--<div style="width:30%;float:left;text-align:right;margin-right:12px;">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <t t-if="len(people)==0">
+                        <div class="no_coupon"
+                             style="width: 100%;height: 120px;background-color: inherit;padding: 50px auto;font-size: 20px;text-align: center;">
+                            <p class="no_text" style="padding: 40px 0px;color: #C8C8C8;">当前没有抄送人</p>
+                        </div>
+                    </t>
+                </body>
+            </t>
+        </template>
+
+        <menuitem id="wechat_oa_menu" name="微信工联单"/>
+        <menuitem id="wechat_oa_gld_menu" name="工联单" parent="wechat_oa_menu"/>
+    </data>
+</openerp>

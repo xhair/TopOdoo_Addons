@@ -3,11 +3,11 @@ import re
 
 import pytz, datetime
 import logging
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 __author__ = 'Administrator'
 
-from openerp import fields, models, exceptions
+from odoo import fields, models, exceptions
 
 _logger = logging.getLogger(__name__)
 

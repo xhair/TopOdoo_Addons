@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+                id="gld_order_print"
+                model="gld"
+                string="工联单"
+                menu="True"
+                report_type="qweb-pdf"
+                name="l10n_cn_gld.report_service_gld_order"
+                file="l10n_cn_gld.report_service_gld_order"
+                />
+    </data>
+</openerp>

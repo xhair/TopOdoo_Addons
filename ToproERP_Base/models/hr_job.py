@@ -9,7 +9,7 @@ from openerp.http import request
 
 _logger = logging.getLogger(__name__)
 
-from openerp import fields, models
+from odoo import fields, models
 
 
 class HrJob(models.Model):

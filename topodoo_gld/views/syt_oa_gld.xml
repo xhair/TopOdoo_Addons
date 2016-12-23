@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © <2016> <gld liujing>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+    <data>
+
+        <record id="syt_oa_gld_view_form" model="ir.ui.view">
+            <field name="name">syt_oa_gld_view_form</field>
+            <field name="model">gld</field>
+            <field name="arch" type="xml">
+                <form string="工联单">
+                    <header>
+                        <button id="comint" class="oe_read_only oe_highlight" name="gld_state_sent"
+                                string="提交审批"
+                                attrs="{'invisible':['|',('curr_approver_is_luser','=', False),('state','!=','draft')]}"
+                                type="object"/>
+                        <!--当前登录人未填写审批意见，并且在审批状态下才会出来-->
+                        <button id="pass" class="oe_read_only oe_highlight"
+                                name="%(action_opinion_agree_gld)d"
+                                attrs="{'invisible':['|',('uid_is_approval','=', False),('state','not in',('pending','pass'))]}"
+                                string="同意" context="{'gld_id':id,'check_state':'同意'}" type="action"/>
+                        <button id="no_pass" class="oe_read_only" name="%(action_opinion_disagree_gld)d"
+                                attrs="{'invisible':['|',('uid_is_approval','=', False),('state','not in',('pending','pass'))]}"
+                                string="不同意" context="{'gld_id':id,'check_state':'不同意'}" type="action"/>
+                        <button id="waiver" class="oe_read_only" name="waiver"
+                                attrs="{'invisible':['|',('uid_is_approval','=', False),('state','not in',('pending','pass'))]}"
+                                string="不在本人审批范围" type="object"/>
+                        <!--当前用户为编制人，状态为审批中才会出来-->
+                        <button id="add_approver" name="%(add_approver_act_window)d"
+                                attrs="{'invisible':[('state','not in',('pass','pending'))]}"
+                                string="添加审批人" context="{'gld_id':id,}" type="action"/>
+
+                        <button name="gld_state_finish" class="oe_read_only oe_highlight"
+                                attrs="{'invisible':['|',('curr_approver_is_luser','=', False),('state','!=','pass')]}"
+                                string="已完成" type="object"/>
+
+                        <button name="gld_finish_to_pass"
+                                attrs="{'invisible':['|',('state','not in',('through')),'|',('processe_type','=','QJ'),('curr_approver_is_luser','=',False)]}"
+                                string="继续审批" type="object"/>
+                        <!--当前登录人为编制人，并且在新建状态下才会出来-->
+                        <button id="recover" name="gld_state_draft"
+                                attrs="{'invisible':['|',('curr_approver_is_luser','=', False),'|',('state','!=','pending'),('processe_type','=','QJ')]}"
+                                string="置为草稿" type="object"/>
+                        <!--当前登录人为编制人，并且在新建状态下才会出来-->
+                        <button id="add_copyer" name="%(add_copy_people)d"
+                                attrs="{'invisible':[('state','in',('n_through','cancel'))]}"
+                                string="抄送" context="{'gld_id':id,}"
+                                type="action"/>
+
+                        <button id="cancel" name="gld_state_cancel"
+                                attrs="{'invisible':['|',('curr_approver_is_luser','=',False),('state','in',('draft','n_through','through','cancel'))]}"
+                                string="作废" type="object"/>
+
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="uid_is_approval"/>
+                            <field name="temp_type" attrs="{'readonly': [('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="gld_temp" attrs="{'readonly': [('state','!=','draft')]}"
+                                   domain="[('is_valid','=',True),('temp_type','=',temp_type)]"/>
+                        </group>
+
+                        <!-- False 为显示-->
+                        <group>
+                            <field readonly="True" invisible='1' name="is_init"/>
+                            <field readonly="True" invisible='1' name="processe_type"/>
+                            <field readonly="True" attrs="{'invisible': [('is_init','=',True)]}" name="numebr"/>
+                            <field readonly="True" name="sponsor"/>
+                            <field readonly="True" invisible='1' name="content_report"/>
+                            <field readonly="True" invisible='1' name="uid_is_approval"/>
+                            <field readonly="True" invisible='1' name="curr_approver_is_luser"/>
+                            <field readonly="True" invisible='1' name="curr_gld_through"/>
+                            <field name="emergency" required='1' on_change="cal_expiration" align='right'
+                                   attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field readonly="True" invisible='1' name="uid_is_copy"/>
+                            <field readonly="True" invisible='1' name="uid_is_read_gld"/>
+                            <field name="subject" required='1' attrs="{'readonly': [('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+                            <field readonly="True" name="dept"/>
+                            <field readonly="True" name="started" string="发起日期"/>
+                            <field name="expiration" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="auto_read" invisible='1'/>
+                        </group>
+                    </group>
+                    <div style="width:840px;heigth:450px">
+                        <group>
+                            <field name="content" required='1' attrs="{'readonly': [('state','!=','draft')]}"/>
+                        </group>
+                    </div>
+                    <field name="attachment_ids" style="width:80%;" widget="many2many_binary"
+                           string="添加附件(附件仅允许添加PDF)"/>
+                    <notebook col="4">
+                        <page String="审批人" attrs="{'invisible': [('state','!=','draft')]}">
+                            <div>
+                                <group>
+                                    <field name="approval_suggest"
+                                           attrs="{'invisible':['&amp;',('curr_approver_is_luser','=',False),('is_init','=',False)]}"/>
+                                </group>
+                            </div>
+                            <field name="approver">
+                                <!--<tree delete="0">-->
+                                <!--<field name="name_related"/>-->
+                                <!--<field name="work_phone"/>-->
+                                <!--<field name="work_email"/>-->
+                                <!--<field name="company_id"/>-->
+                                <!--<field name="department_id"/>-->
+                                <!--<field name="job_id"/>-->
+                                <!--<button name="remove"-->
+                                <!--string="移除" type="object"-->
+                                <!--icon="STOCK_CLOSE" context="{'consume': True}"-->
+                                <!--attrs="{'invisible': [('state','!=','draft')]}"/>-->
+                                <!--</tree>-->
+                            </field>
+
+                        </page>
+                        <page String="审批意见"
+                              attrs="{'invisible': [('state','not in',('pending','pass','n_through','through','cancel'))]}">
+                            <field readonly='1' name="approver_opinions"/>
+                        </page>
+
+                        <page String="抄送人" attrs="{'invisible': [('state','in',('n_through','cancel'))]}">
+                            <div>
+                                <group>
+                                    <field name="copy_declare" height="5px;" readonly="True"/>
+                                </group>
+                            </div>
+                            <field name="copy_users" readonly='1'>
+                                <tree string="抄送人" editable="bottom">
+                                    <field name="company_id"/>
+                                    <field name="department_id"/>
+                                    <field name="job_id"/>
+                                    <field name="name_related"/>
+                                    <field name="mobile_phone"/>
+                                    <field name="work_phone"/>
+                                    <field name="work_email"/>
+                                    <field name="parent_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <div style="float:left;">
+                        <a style="float:left;color:blue;" href="http://ig.hn-syt.com/gld/help1.html"
+                           target="_blank">教你如何生成PDF文件
+                        </a>
+                        <br/>
+                        <a style="float:left;color:blue;" href="http://ig.hn-syt.com/gld/help2.html"
+                           target="_blank">常见问题
+                        </a>
+                    </div>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="syt_oa_gld_view_search" model="ir.ui.view">
+            <field name="name">syt_oa_gld_view_search</field>
+            <field name="model">gld</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" string="工联单编号"/>
+                    <field name="subject"/>
+                    <field name="content" string="标题/正文/发起人"
+                           filter_domain="['|',('subject','ilike',self),'|',('sponsor','ilike',self),('content','ilike',self)]"/>
+
+                    <filter name="state" string="草稿" domain="  [('state', '=', 'draft')]"/>
+                    <filter name="state" string="待审" domain="[('state', '=', 'pending')]"/>
+                    <filter name="state" string="审批中" domain="[('state', '=', 'pass')]"/>
+                    <filter name="state" string="审核通过" domain="[('state', '=', 'through')]"/>
+                    <filter name="state" string="审核不通过" domain="[('state', '=', 'n_through')]"/>
+                    <filter name="state" string="作废" domain="[('state', '=', 'cancel')]"/>
+
+                    <group string="Group By">
+                        <filter name="group_by_company_id" context="{'group_by': 'company_id'}" string="公司"/>
+                        <filter name="group_by_sponsor" context="{'group_by': 'sponsor'}" string="发起人"/>
+                        <filter name="group_by_state" context="{'group_by': 'state'}" string="状态"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="syt_oa_gld_view_tree" model="ir.ui.view">
+            <field name="name">syt_oa_gld_view_tree</field>
+            <field name="model">gld</field>
+            <field name="arch" type="xml">
+                <tree string="工联单" colors="red:now_time=='1';blue:now_time=='2'">
+                    <field name="name" string="编号"></field>
+                    <field name="subject"/>
+                    <field name="sponsor"/>
+                    <field name="dept"/>
+                    <field name="emergency"/>
+                    <field name="started"/>
+                    <field name="expiration"/>
+                    <field name="state"/>
+                    <field name="approver" string="未审批的人"/>
+                    <field name="now_time" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--我发起的工联单-->
+        <record id="syt_oa_gld_new_action" model="ir.actions.act_window">
+            <field name="name">我的工联单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">gld</field>
+            <field name="view_type">form</field>
+            <!--<field name="search_view_id" ref="view_gld_filter"/>-->
+            <field name="domain">[('create_uid', '=',uid)]</field>
+            <field name="context">[]</field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="view_id" ref="syt_oa_gld_view_tree"></field>-->
+            <field name="view_id" ref="syt_oa_gld_view_search"></field>
+        </record>
+
+        <!-- 等待我处理的工联单-->
+        <record id="syt_oa_gld_daiban_action" model="ir.actions.act_window">
+            <field name="name">待办工联单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">gld</field>
+            <field name="view_type">form</field>
+            <!--<field name="domain">['&amp;',('state','in',('pending','pass')),'|',('approver.user_id',-->
+            <!--'=',uid),('copy_users.user_id', '=',uid)]-->
+            <!--</field>-->
+            <field name="domain">
+                [
+                '|',
+                '&amp;',('copy_users_dy_ids.user_id', '=',uid),('state','=','through'),
+                '&amp;',('approver.user_id','=',uid),('state','in',('pending','pass'))
+                ]
+            </field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="view_id" ref="syt_oa_gld_view_tree"></field>-->
+            <field name="view_id" ref="syt_oa_gld_view_search"></field>
+        </record>
+
+        <!-- 我已处理的工联单-->
+        <record id="syt_oa_gld_yiban_action" model="ir.actions.act_window">
+            <field name="name">已办工联单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">gld</field>
+            <field name="view_type">form</field>
+            <field name="domain">['|',('yi_approver_user_ids.user_id', '=',uid),('copy_users_yy_ids.user_id', '=',uid)]
+            </field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="view_id" ref="syt_oa_gld_view_tree"></field>-->
+            <field name="view_id" ref="syt_oa_gld_view_search"></field>
+        </record>
+
+        <!--&lt;!&ndash;统计图表&ndash;&gt;-->
+        <!--<record id="syt_oa_gld_view_graph" model="ir.ui.view">-->
+        <!--<field name="name">syt_oa_gld_view_graph</field>-->
+        <!--<field name="model">gld</field>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<graph string="Invoices Analysis" type="bar" stacked="True">-->
+        <!--<field name="company_id" string="公司" type="row"/>-->
+        <!--<field name="state" string="状态" type="row"/>-->
+        <!--<field name="started" string="日期" type="row"/>-->
+        <!--&lt;!&ndash;<field name="attend_card_id" type="col"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<field name="money" type="measure"/>&ndash;&gt;-->
+        <!--</graph>-->
+        <!--</field>-->
+        <!--</record>-->
+
+
+        <record id="syt_oa_gld_view_pivot" model="ir.ui.view">
+            <field name="name">syt_oa_gld_view_pivot</field>
+            <field name="model">gld</field>
+            <field name="arch" type="xml">
+                <pivot string="Invoices Analysis">
+                    <field name="company_id" string="公司" type="row"/>
+                    <!--<field name="state" string="状态" type="row"/>-->
+                    <field name="started" string="日期" type="row"/>
+
+                    <!--<field name="company_id" string="公司" type="col"/>-->
+                    <field name="state" string="状态" type="col"/>
+                    <!--<field name="started" string="日期" type="col"/>-->
+                </pivot>
+            </field>
+        </record>
+
+        <!-- 工联单管理-->
+        <record id="syt_oa_gld_gld_manager_action" model="ir.actions.act_window">
+            <field name="name">工联单管理</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">gld</field>
+            <field name="view_type">form</field>
+            <field name="domain">[(1, '=',1)]
+            </field>
+            <field name="view_mode">tree,form,pivot</field>
+            <field name="view_id" ref="syt_oa_gld_view_search"></field>
+        </record>
+
+        <menuitem id="syt_oa_gld_new_menu" name="我发起的工联单" parent="oa_gld_menu" action="syt_oa_gld_new_action"/>
+        <menuitem id="syt_oa_gld_daiban_menu" name="等待我处理的工联单" parent="oa_gld_menu" action="syt_oa_gld_daiban_action"/>
+        <menuitem id="syt_oa_gld_yiban_menu" name="我已处理的工联单" parent="oa_gld_menu" action="syt_oa_gld_yiban_action"/>
+        <menuitem id="syt_oa_gld_gld_manager_menu" name="工联单管理" parent="oa_gld_menu"
+                  action="syt_oa_gld_gld_manager_action" groups="group_gld_manager"/>
+
+    </data>
+</openerp>
