@@ -76,12 +76,12 @@ class WeChatEnterprise(object):
             return False, res
 
     def __post(self, url, data):
-        _logger.warning(u"the url is：%s" % url)
+        _logger.debug(u"the url is：%s" % url)
         res = requests.post(url, data=json.dumps(data).decode('unicode-escape').encode("utf-8")).json()
         return self.__response(res)
 
     def __get(self, url):
-        _logger.warning(u"the url is：%s" % url)
+        _logger.debug(u"the url is：%s" % url)
         res = requests.get(url).json()
         return self.__response(res)
 

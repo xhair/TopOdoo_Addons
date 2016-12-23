@@ -12,7 +12,8 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//notebook/page/group" position="before">
-                    <group><field name="allow_export"/>></group>
+                    <group><field name="allow_export"/>>
+                    </group>
                 </xpath>
 
             </field>

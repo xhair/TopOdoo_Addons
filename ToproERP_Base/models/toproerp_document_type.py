@@ -4,7 +4,7 @@
 
 import logging
 
-from openerp import fields, models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -18,6 +18,6 @@ class ToproerpDocumentType(models.Model):
     note = fields.Text(string=u'备注')
     active = fields.Boolean(string=u'是否有效', default=True)
 
-    #数据库唯一约束
+    # 数据库唯一约束
     _sql_constraints = [
-        ('toproerp_document_type_no_uniq', 'unique (document_type_no)', u'类型编码不能重复!'),]
+        ('toproerp_document_type_no_uniq', 'unique (document_type_no)', u'类型编码不能重复!'), ]

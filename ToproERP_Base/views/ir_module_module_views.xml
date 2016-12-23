@@ -1,18 +1,24 @@
 <odoo>
-  <data>
+    <data>
         <!--继承 安装模块看板视图，增加看板模式，可更新，卸载app-->
         <record id="ir_module_module_kanban_view_inherit" model="ir.ui.view">
             <field name="name">ir.module.module.kanban.view.inherit</field>
             <field name="model">ir.module.module</field>
             <field name="inherit_id" ref="base.module_view_kanban"/>
             <field name="arch" type="xml">
-                <xpath expr="/kanban/templates/t[@t-name='kanban-box']/div[@class='oe_module_vignette oe_kanban_global_click']/div[@class='oe_module_desc']/button[@class='btn btn-default pull-right btn-sm disabled']" position="replace">
-                    <button type="object" class="btn btn-danger pull-right btn-sm" name="button_uninstall" states="installed">卸载</button>
+                <xpath expr="/kanban/templates/t[@t-name='kanban-box']/div[@class='oe_module_vignette oe_kanban_global_click']/div[@class='oe_module_desc']/button[@class='btn btn-default pull-right btn-sm disabled']"
+                       position="replace">
+                    <button type="object" class="btn btn-danger pull-right btn-sm" name="button_uninstall"
+                            states="installed">卸载
+                    </button>
                 </xpath>
-                <xpath expr="/kanban/templates/t[@t-name='kanban-box']/div[@class='oe_module_vignette oe_kanban_global_click']/div[@class='oe_module_desc']" position="after">
-                    <button type="object" class="btn btn-info btn-sm col-xs-offset-3 mt16" name="button_immediate_upgrade" states="installed">更新</button>
+                <xpath expr="/kanban/templates/t[@t-name='kanban-box']/div[@class='oe_module_vignette oe_kanban_global_click']/div[@class='oe_module_desc']"
+                       position="after">
+                    <button type="object" class="btn btn-info btn-sm col-xs-offset-3 mt16"
+                            name="button_immediate_upgrade" states="installed">更新
+                    </button>
                 </xpath>
             </field>
         </record>
-  </data>
+    </data>
 </odoo>

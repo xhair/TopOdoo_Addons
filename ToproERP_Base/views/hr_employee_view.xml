@@ -13,11 +13,11 @@
                 </field>
                 <field name="department_id" position="replace">
                     <field name="department_id" on_change="onchange_department_id(department_id)"
-                            domain="[('company_id','=',company_id)]" />
+                           domain="[('company_id','=',company_id)]"/>
                 </field>
                 <field name="job_id" position="replace">
-                    <field name="job_id"  domain="[('department_id','=',department_id)]"
-                             />
+                    <field name="job_id" domain="[('department_id','=',department_id)]"
+                    />
                 </field>
             </field>
         </record>

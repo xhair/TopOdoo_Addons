@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp.tests import common
+from odoo.tests import common
 
 class TestBrands(common.TransactionCase):
     """ This class extends the base TransactionCase, in order to test the

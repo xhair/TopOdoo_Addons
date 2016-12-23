@@ -64,7 +64,7 @@
                     <field name="factory_code"/>
                 </field>
                 <!--<field name="state" position="replace">-->
-                    <!--<field name="remark"/>-->
+                <!--<field name="remark"/>-->
                 <!--</field>-->
             </field>
         </record>
